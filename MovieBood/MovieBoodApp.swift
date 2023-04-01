@@ -11,7 +11,7 @@ import SwiftUI
 struct MovieBoodApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MovieBoodTabView()
         }
     }
 }
