@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct MovieBoodApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     var body: some Scene {
         WindowGroup {
             MovieBoodTabView()

@@ -17,6 +17,26 @@
 		7454C86129D72161007473D4 /* MovieBoodTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7454C86029D72161007473D4 /* MovieBoodTabView.swift */; };
 		7454C86329D7220C007473D4 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7454C86229D7220C007473D4 /* SearchView.swift */; };
 		7454C86529D72255007473D4 /* WatchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7454C86429D72255007473D4 /* WatchListView.swift */; };
+		74F31B4229D875700066981C /* Resolver in Frameworks */ = {isa = PBXBuildFile; productRef = 74F31B4129D875700066981C /* Resolver */; };
+		74F31B4529D875BE0066981C /* DependencyRegistrationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4429D875BE0066981C /* DependencyRegistrationService.swift */; };
+		74F31B4829D875F30066981C /* RemoteServiceRegistrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4729D875F30066981C /* RemoteServiceRegistrations.swift */; };
+		74F31B4A29D876320066981C /* RepositoryRegistrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4929D876320066981C /* RepositoryRegistrations.swift */; };
+		74F31B4C29D876460066981C /* ServiceRegistrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4B29D876460066981C /* ServiceRegistrations.swift */; };
+		74F31B4E29D876B40066981C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4D29D876B40066981C /* AppDelegate.swift */; };
+		74F31B5029D876E40066981C /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B4F29D876E40066981C /* AppConfig.swift */; };
+		74F31B5729D878000066981C /* TargetEndPointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B5629D878000066981C /* TargetEndPointProtocol.swift */; };
+		74F31B5929D878130066981C /* BaseServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B5829D878130066981C /* BaseServiceProtocol.swift */; };
+		74F31B5B29D878200066981C /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B5A29D878200066981C /* Requestable.swift */; };
+		74F31B5D29D878300066981C /* NetworkLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B5C29D878300066981C /* NetworkLoader.swift */; };
+		74F31B5F29D878510066981C /* URLComponentsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B5E29D878510066981C /* URLComponentsExtensions.swift */; };
+		74F31B6129D878780066981C /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6029D878780066981C /* URLSessionExtensions.swift */; };
+		74F31B6329D878A10066981C /* HTTPResponseExntensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6229D878A10066981C /* HTTPResponseExntensions.swift */; };
+		74F31B6529D878B60066981C /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6429D878B60066981C /* HTTPMethod.swift */; };
+		74F31B6729D878D70066981C /* HTTPStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6629D878D70066981C /* HTTPStatus.swift */; };
+		74F31B6929D878EC0066981C /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6829D878EC0066981C /* AppError.swift */; };
+		74F31B6B29D878FB0066981C /* RequestObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B6A29D878FB0066981C /* RequestObject.swift */; };
+		74F31B7329D879AC0066981C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B7229D879AC0066981C /* NetworkService.swift */; };
+		74F31B7629D8AAC50066981C /* MoviesRemoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F31B7529D8AAC50066981C /* MoviesRemoteService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +54,25 @@
 		7454C86029D72161007473D4 /* MovieBoodTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieBoodTabView.swift; sourceTree = "<group>"; usesTabs = 0; };
 		7454C86229D7220C007473D4 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		7454C86429D72255007473D4 /* WatchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchListView.swift; sourceTree = "<group>"; };
+		74F31B4429D875BE0066981C /* DependencyRegistrationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyRegistrationService.swift; sourceTree = "<group>"; };
+		74F31B4729D875F30066981C /* RemoteServiceRegistrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteServiceRegistrations.swift; sourceTree = "<group>"; };
+		74F31B4929D876320066981C /* RepositoryRegistrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRegistrations.swift; sourceTree = "<group>"; };
+		74F31B4B29D876460066981C /* ServiceRegistrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceRegistrations.swift; sourceTree = "<group>"; };
+		74F31B4D29D876B40066981C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		74F31B4F29D876E40066981C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		74F31B5629D878000066981C /* TargetEndPointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetEndPointProtocol.swift; sourceTree = "<group>"; };
+		74F31B5829D878130066981C /* BaseServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseServiceProtocol.swift; sourceTree = "<group>"; };
+		74F31B5A29D878200066981C /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
+		74F31B5C29D878300066981C /* NetworkLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLoader.swift; sourceTree = "<group>"; };
+		74F31B5E29D878510066981C /* URLComponentsExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLComponentsExtensions.swift; sourceTree = "<group>"; };
+		74F31B6029D878780066981C /* URLSessionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
+		74F31B6229D878A10066981C /* HTTPResponseExntensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPResponseExntensions.swift; sourceTree = "<group>"; };
+		74F31B6429D878B60066981C /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		74F31B6629D878D70066981C /* HTTPStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPStatus.swift; sourceTree = "<group>"; };
+		74F31B6829D878EC0066981C /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		74F31B6A29D878FB0066981C /* RequestObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestObject.swift; sourceTree = "<group>"; };
+		74F31B7229D879AC0066981C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		74F31B7529D8AAC50066981C /* MoviesRemoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesRemoteService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74F31B4229D875700066981C /* Resolver in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +96,7 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		742DA3A129D81BDC00F5B944 /* Screens */ = {
+		742DA3A129D81BDC00F5B944 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
 				7454C86029D72161007473D4 /* MovieBoodTabView.swift */,
@@ -65,7 +105,7 @@
 				742DA3A329D81BFF00F5B944 /* Search */,
 				742DA3A529D81C2A00F5B944 /* WatchList */,
 			);
-			path = Screens;
+			path = Modules;
 			sourceTree = "<group>";
 		};
 		742DA3A229D81BF600F5B944 /* MovieList */ = {
@@ -103,6 +143,7 @@
 		742DA3A829D82CEC00F5B944 /* Binding */ = {
 			isa = PBXGroup;
 			children = (
+				742DA39C29D8175400F5B944 /* Fonts */,
 				742DA3A929D82CF700F5B944 /* LoadableImage.swift */,
 			);
 			path = Binding;
@@ -127,12 +168,16 @@
 		7454C85129D6F264007473D4 /* MovieBood */ = {
 			isa = PBXGroup;
 			children = (
+				74F31B4329D875AE0066981C /* AppDelegateServices */,
+				74F31B4629D875E00066981C /* DependencyInjections */,
 				742DA3A829D82CEC00F5B944 /* Binding */,
+				74F31B6C29D879200066981C /* Application */,
 				742DA39B29D72BD300F5B944 /* Info.plist */,
-				742DA39C29D8175400F5B944 /* Fonts */,
+				74F31B5129D877900066981C /* Core */,
 				7454C85229D6F264007473D4 /* MovieBoodApp.swift */,
+				74F31B4D29D876B40066981C /* AppDelegate.swift */,
 				742DA3A629D81E6C00F5B944 /* ImageSlider.swift */,
-				742DA3A129D81BDC00F5B944 /* Screens */,
+				74F31B4F29D876E40066981C /* AppConfig.swift */,
 				7454C85629D6F266007473D4 /* Assets.xcassets */,
 				7454C85829D6F266007473D4 /* Preview Content */,
 			);
@@ -145,6 +190,132 @@
 				7454C85929D6F266007473D4 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		74F31B4329D875AE0066981C /* AppDelegateServices */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B4429D875BE0066981C /* DependencyRegistrationService.swift */,
+			);
+			path = AppDelegateServices;
+			sourceTree = "<group>";
+		};
+		74F31B4629D875E00066981C /* DependencyInjections */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B4729D875F30066981C /* RemoteServiceRegistrations.swift */,
+				74F31B4929D876320066981C /* RepositoryRegistrations.swift */,
+				74F31B4B29D876460066981C /* ServiceRegistrations.swift */,
+			);
+			path = DependencyInjections;
+			sourceTree = "<group>";
+		};
+		74F31B5129D877900066981C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B5229D877C10066981C /* Network */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		74F31B5229D877C10066981C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B5329D877C70066981C /* Protocols */,
+				74F31B5529D877D20066981C /* Entities */,
+				74F31B5429D877CC0066981C /* Extensions */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		74F31B5329D877C70066981C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B5629D878000066981C /* TargetEndPointProtocol.swift */,
+				74F31B5829D878130066981C /* BaseServiceProtocol.swift */,
+				74F31B5A29D878200066981C /* Requestable.swift */,
+				74F31B5C29D878300066981C /* NetworkLoader.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		74F31B5429D877CC0066981C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B5E29D878510066981C /* URLComponentsExtensions.swift */,
+				74F31B6029D878780066981C /* URLSessionExtensions.swift */,
+				74F31B6229D878A10066981C /* HTTPResponseExntensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		74F31B5529D877D20066981C /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B6429D878B60066981C /* HTTPMethod.swift */,
+				74F31B6629D878D70066981C /* HTTPStatus.swift */,
+				74F31B6829D878EC0066981C /* AppError.swift */,
+				74F31B6A29D878FB0066981C /* RequestObject.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		74F31B6C29D879200066981C /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B6D29D879370066981C /* Network */,
+				742DA3A129D81BDC00F5B944 /* Modules */,
+				74F31B6E29D8793B0066981C /* Data */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		74F31B6D29D879370066981C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B7229D879AC0066981C /* NetworkService.swift */,
+				74F31B7429D879B80066981C /* RemoteServices */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		74F31B6E29D8793B0066981C /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B7129D8796B0066981C /* Responses */,
+				74F31B7029D879660066981C /* Models */,
+				74F31B6F29D8795B0066981C /* Repositories */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		74F31B6F29D8795B0066981C /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
+		74F31B7029D879660066981C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		74F31B7129D8796B0066981C /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		74F31B7429D879B80066981C /* RemoteServices */ = {
+			isa = PBXGroup;
+			children = (
+				74F31B7529D8AAC50066981C /* MoviesRemoteService.swift */,
+			);
+			path = RemoteServices;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,6 +334,9 @@
 			dependencies = (
 			);
 			name = MovieBood;
+			packageProductDependencies = (
+				74F31B4129D875700066981C /* Resolver */,
+			);
 			productName = MovieBood;
 			productReference = 7454C84F29D6F264007473D4 /* MovieBood.app */;
 			productType = "com.apple.product-type.application";
@@ -191,6 +365,9 @@
 				Base,
 			);
 			mainGroup = 7454C84629D6F264007473D4;
+			packageReferences = (
+				74F31B4029D875700066981C /* XCRemoteSwiftPackageReference "Resolver" */,
+			);
 			productRefGroup = 7454C85029D6F264007473D4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -218,12 +395,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				742DA3A029D81A1500F5B944 /* MovieDetailView.swift in Sources */,
+				74F31B6529D878B60066981C /* HTTPMethod.swift in Sources */,
+				74F31B5D29D878300066981C /* NetworkLoader.swift in Sources */,
+				74F31B4529D875BE0066981C /* DependencyRegistrationService.swift in Sources */,
+				74F31B5929D878130066981C /* BaseServiceProtocol.swift in Sources */,
 				742DA3A729D81E6C00F5B944 /* ImageSlider.swift in Sources */,
+				74F31B5F29D878510066981C /* URLComponentsExtensions.swift in Sources */,
+				74F31B5029D876E40066981C /* AppConfig.swift in Sources */,
+				74F31B6729D878D70066981C /* HTTPStatus.swift in Sources */,
 				7454C86329D7220C007473D4 /* SearchView.swift in Sources */,
+				74F31B4829D875F30066981C /* RemoteServiceRegistrations.swift in Sources */,
 				7454C86129D72161007473D4 /* MovieBoodTabView.swift in Sources */,
+				74F31B5729D878000066981C /* TargetEndPointProtocol.swift in Sources */,
 				7454C85529D6F264007473D4 /* MovelistView.swift in Sources */,
+				74F31B6129D878780066981C /* URLSessionExtensions.swift in Sources */,
+				74F31B4A29D876320066981C /* RepositoryRegistrations.swift in Sources */,
+				74F31B4E29D876B40066981C /* AppDelegate.swift in Sources */,
+				74F31B7629D8AAC50066981C /* MoviesRemoteService.swift in Sources */,
+				74F31B6329D878A10066981C /* HTTPResponseExntensions.swift in Sources */,
+				74F31B4C29D876460066981C /* ServiceRegistrations.swift in Sources */,
 				742DA3AA29D82CF700F5B944 /* LoadableImage.swift in Sources */,
+				74F31B6929D878EC0066981C /* AppError.swift in Sources */,
 				7454C86529D72255007473D4 /* WatchListView.swift in Sources */,
+				74F31B5B29D878200066981C /* Requestable.swift in Sources */,
+				74F31B6B29D878FB0066981C /* RequestObject.swift in Sources */,
+				74F31B7329D879AC0066981C /* NetworkService.swift in Sources */,
 				7454C85329D6F264007473D4 /* MovieBoodApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,6 +629,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		74F31B4029D875700066981C /* XCRemoteSwiftPackageReference "Resolver" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Resolver.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74F31B4129D875700066981C /* Resolver */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 74F31B4029D875700066981C /* XCRemoteSwiftPackageReference "Resolver" */;
+			productName = Resolver;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7454C84729D6F264007473D4 /* Project object */;
 }
