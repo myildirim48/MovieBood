@@ -8,74 +8,29 @@
 import SwiftUI
 
 struct MovelistView: View {
+    
+    @StateObject private var viewModel = MovieListViewModel()
     var body: some View {
         NavigationView {
             ScrollView{
                 VStack{
-                    
                     NavigationLink {
                         MovieDetailView()
                     } label: {
-                        ImageSlider()
+                        ImageSlider(popularMovies: viewModel.popularMovies)
                     }
-
-                    
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("Star Wars")
-                                    .foregroundColor(.white)
-                                    .fontWeight(.bold)
-                                    .font(.system(size: 40))
-                                HStack {
-                                    Text("★★★★★")
-                                        .foregroundColor(.yellow)
-                                    Text("4.8")
-                                        .foregroundColor(.white)
-                                        .font(.system(size: 20))
-                                
-                                }
-                                HStack {
-                                    Text("Action")
-                                        .foregroundColor(.white)
-                                    Text("2hr 30min")
-                                        .foregroundColor(.white)
-                                }
-                            }
-                            .padding(.leading,20)
-                            Spacer()
-                        }
-                    
-                    VStack(alignment: .leading) {
-                        
-                        Text("Drama")
-                            .font(.custom("PlayfairDisplay-Bold", size: 32))
-                            .padding(.horizontal)
-                            .foregroundColor(.white)
-                            .padding(.top,30)
-                        
-                        ScrollView (.horizontal, showsIndicators: false) {
-                            HStack (spacing: 0) {
-                                ForEach(0 ..< 12) { i in
-                                    NavigationLink(
-                                        destination: MovieDetailView(),
-                                        label: {
-                                            MovieCardView(image: Image("star-wars-banner"),filmName: "Star Wars")
-                                        })
-                                        .navigationBarHidden(true)
-                                        .foregroundColor(.black)
-                                }
-                                .padding(.leading)
-                            }
-                        }
-                        .padding(.bottom, 30)
-                    }
-                    
-
+                    HorizontalMovies(dataType: .nowPlaying, movies: viewModel.nowPlayingMovies)
+                    HorizontalMovies(dataType: .upComing, movies: viewModel.upComingMovies)
+                    HorizontalMovies(dataType: .topRated, movies: viewModel.topRatedMovies)
+            
+                    }.onAppear {
+                        viewModel.fetchMovies()
+                        //TODO: - Pagination
                     }
             }
-            .padding(.bottom, 60)
-            .ignoresSafeArea()
-        .background(.black)
+            .padding(.bottom, 30)
+            .padding(.top, 10)
+            .background(.black)
         }
     }
 }
@@ -86,40 +41,37 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-struct MovieCardView: View {
-    let image: Image
-    let size: CGFloat = 250
-    let filmName: String
+struct HorizontalMovies: View {
+    
+    var dataType: FetchedDataType
+    var movies: [MovieResultUIModel]
     
     var body: some View {
-        VStack {
-            image
-                .resizable()
-                .frame(width: size - 30, height: size + 30)
-                .cornerRadius(8.0)
+        VStack(alignment: .leading) {
             
-            HStack {
-                Text(filmName).font(.title).fontWeight(.bold)
-                    .foregroundColor(.white)
-                Spacer()
-            }
+            Text(dataType.title)
+                .font(.custom("PlayfairDisplay-Bold", size: 25))
+                .padding(.horizontal)
+                .foregroundColor(.white)
+                .padding(.top, 20)
             
-            HStack (spacing: 2) {
-                ForEach(0 ..< 5) { item in
-                    Text("★")
-                        .foregroundColor(.yellow)
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack{
+                    
+                    ForEach(movies) { movie in
+                        NavigationLink(
+                            destination: MovieDetailView(),
+                            label: {
+                                LoadableImage(url: URL(string: movie.returnImgURL), widthPo: 140, heightPo: 240 )
+                                    .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 10)
+                                
+                            })
+                        .navigationBarHidden(true)
+                        .foregroundColor(.black)
+                    }
+                    .padding(.leading)
                 }
-                Spacer()
-                Text("Action")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.white)
             }
         }
-        .frame(width: size - 45)
-        .padding(15)
-        .background(Color.secondary)
-        .cornerRadius(8)
-        
     }
 }

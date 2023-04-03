@@ -6,26 +6,27 @@
 //
 
 import Foundation
-protocol SearchServiceProtocol {
+protocol MoviesRemoteServiceProtocol {
     
-    func getSearchedItems(queryText:String,
-                          page: Int,
-                          handler: @escaping (Result<MultiSearchResponse, Error>) -> Void)
+    func getMoviesFromRemote(page: Int,
+                             endpoint: MoviesListEndPoints,
+                             movieListType: FetchedDataType,
+                          handler: @escaping (Result<MovieResponse<MovieResultModel>, Error>) -> Void)
 }
 
- final class SearchRemoteService: SearchServiceProtocol,Requestable {
+ final class MoviesRemoteService: MoviesRemoteServiceProtocol,Requestable {
     
-    typealias TargetEndPoint = SearchEndPoints
-    
-    func getSearchedItems(queryText:String,
-                          page: Int,
-                          handler: @escaping (Result<MultiSearchResponse, Error>) -> Void){
+    typealias TargetEndPoint = MovieEndPoints
+
+#warning("Movie List Type ????")
+     func getMoviesFromRemote(page: Int,
+                              endpoint: MoviesListEndPoints,
+                              movieListType: FetchedDataType,
+                          handler: @escaping (Result<MovieResponse<MovieResultModel>, Error>) -> Void){
         
-        var requestObject = TargetEndPoint.multiSearch.commonRequestObject
-        requestObject.parameters["query"] = queryText
+         let requestObject = TargetEndPoint.movieListView(ListEndpoint: endpoint).commonRequestObject
         request(with: requestObject, completionHandler: handler)
     }
-    
-    
-   
+
 }
+

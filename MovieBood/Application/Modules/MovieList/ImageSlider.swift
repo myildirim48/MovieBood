@@ -9,16 +9,18 @@ import SwiftUI
 
 struct ImageSlider: View {
     
+    var popularMovies: [MovieResultUIModel]
+    
     var body: some View {
         
         TabView {
-            ForEach(0..<5){_ in
-                TestImage()
-            }
-            
-            
+            ForEach(popularMovies) { movie in
+                VStack(alignment: .leading) {
+                LoadableImage(url: URL(string: movie.returnImgURL), widthPo: 450, heightPo: 550)
+                    }
+                }
         }
-        .ignoresSafeArea()
+        .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 50)
         .frame(height: 550)
         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
         .onAppear(perform: {
@@ -32,16 +34,7 @@ struct ImageSlider: View {
 
 struct ImageSlider_Previews: PreviewProvider {
     static var previews: some View {
-        ImageSlider()
+        ImageSlider(popularMovies: MovieResultUIModel.mocModelArr)
     }
 }
 
-struct TestImage: View {
-    
-    var body: some View {
-        Image("star-wars-banner")
-            .resizable()
-            .frame(height: 550)
-            .scaledToFit()
-    }
-}

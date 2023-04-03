@@ -20,14 +20,12 @@ struct LoadableImage: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
-                        .shadow(radius: 4)
                         .frame(width: widthPo, height: heightPo)
                 case .failure:
                     Image("PlaceholderImage")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(8)
-                        .shadow(radius: 4)
                         .frame(width: 85, height: 85)
                 case .empty:
                     ProgressView()
