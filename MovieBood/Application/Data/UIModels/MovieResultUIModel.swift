@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct MovieResultUIModel: Identifiable{
+struct MovieResultUIModel: Identifiable,Equatable{
 
 #warning(" Because of the identifiable without this foreach gives an error")
     let id = UUID()
@@ -33,7 +33,7 @@ struct MovieResultUIModel: Identifiable{
 extension MovieResultUIModel: MockableModel {
     
     static var mock: MovieResultUIModel {
-        return MovieResultUIModel(gameID: 123,fetchedDataType: .lastest, originalTitle: "Title Mocek", posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg", releaseDate: "30.03.2020", voteAverage: 7.8)
+        return MovieResultUIModel(gameID: 123,fetchedDataType: .nowPlaying, originalTitle: "Title Mocek", posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg", releaseDate: "30.03.2020", voteAverage: 7.8)
     }
     
     static var mocModelArr: [MovieResultUIModel] = [mock,mock]

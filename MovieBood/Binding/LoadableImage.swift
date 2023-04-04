@@ -22,7 +22,7 @@ struct LoadableImage: View {
                         .cornerRadius(10)
                         .frame(width: widthPo, height: heightPo)
                 case .failure:
-                    Image("PlaceholderImage")
+                    Image(systemName: "house")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(8)

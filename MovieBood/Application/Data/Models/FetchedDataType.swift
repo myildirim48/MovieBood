@@ -7,7 +7,7 @@
 
 import Foundation
 enum FetchedDataType: String {
-    case popular,nowPlaying, lastest, upComing, topRated
+    case popular,nowPlaying,upComing, topRated
     
     var title : String {
         switch self {
@@ -15,8 +15,6 @@ enum FetchedDataType: String {
             return "Popular"
         case .nowPlaying:
             return "Now Playing"
-        case .lastest:
-            return "Latest"
         case .upComing:
             return "Up Coming"
         case .topRated:

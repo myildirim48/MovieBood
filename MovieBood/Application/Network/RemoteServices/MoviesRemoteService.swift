@@ -24,7 +24,8 @@ protocol MoviesRemoteServiceProtocol {
                               movieListType: FetchedDataType,
                           handler: @escaping (Result<MovieResponse<MovieResultModel>, Error>) -> Void){
         
-         let requestObject = TargetEndPoint.movieListView(ListEndpoint: endpoint).commonRequestObject
+         var requestObject = TargetEndPoint.movieListView(ListEndpoint: endpoint).commonRequestObject
+         requestObject.parameters["page"] = String(page)
         request(with: requestObject, completionHandler: handler)
     }
 
