@@ -11,7 +11,7 @@ struct MovieResultUIModel: Identifiable,Equatable{
 #warning(" Because of the identifiable without this foreach gives an error")
     let id = UUID()
     
-    let gameID: Int
+    let movieID: Int
     let fetchedDataType: FetchedDataType?
     let originalTitle: String?
     let posterPath, releaseDate: String?
@@ -33,7 +33,7 @@ struct MovieResultUIModel: Identifiable,Equatable{
 extension MovieResultUIModel: MockableModel {
     
     static var mock: MovieResultUIModel {
-        return MovieResultUIModel(gameID: 123,fetchedDataType: .nowPlaying, originalTitle: "Title Mocek", posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg", releaseDate: "30.03.2020", voteAverage: 7.8)
+        return MovieResultUIModel(movieID: 123,fetchedDataType: .nowPlaying, originalTitle: "Title Mocek", posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg", releaseDate: "30.03.2020", voteAverage: 7.8)
     }
     
     static var mocModelArr: [MovieResultUIModel] = [mock,mock]
@@ -42,7 +42,7 @@ extension MovieResultUIModel: MockableModel {
     static func convert(from responseModelArr: [MovieResultModel], dataType: FetchedDataType) -> [MovieResultUIModel] {
         return responseModelArr.map { responseModel in
             
-            return MovieResultUIModel(gameID: responseModel.id, fetchedDataType: dataType , originalTitle: responseModel.originalTitle, posterPath: responseModel.posterPath, releaseDate: responseModel.releaseDate, voteAverage: responseModel.voteAverage)
+            return MovieResultUIModel(movieID: responseModel.id, fetchedDataType: dataType , originalTitle: responseModel.originalTitle, posterPath: responseModel.posterPath, releaseDate: responseModel.releaseDate, voteAverage: responseModel.voteAverage)
         }
     }
 }

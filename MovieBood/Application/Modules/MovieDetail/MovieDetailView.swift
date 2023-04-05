@@ -11,7 +11,7 @@ struct MovieDetailView: View {
     var body: some View {
         ScrollView {
             VStack{
-                LoadableImage(url: URL(string: "https://image.tmdb.org/t/p/w500/9mnXOxmkZSQCHjprx47CnamBEOk.jpg"), widthPo: 450, heightPo: 550)
+                LoadableImage(url: URL(string: "https://image.tmdb.org/t/p/w500/9mnXOxmkZSQCHjprx47CnamBEOk.jpg"))
                     .shadow(color: .init(white: 1.0, opacity: 0.5), radius: 10)
 
                 HStack{
@@ -29,7 +29,7 @@ struct MovieDetailView: View {
                     Spacer()
                 }.padding(.leading,50)
                 
-            }
+            }.frame(width: 450, height: 550)
    
         }
             .background(.black)

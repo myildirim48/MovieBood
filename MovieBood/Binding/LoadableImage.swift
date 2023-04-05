@@ -9,18 +9,16 @@ import SwiftUI
 
 struct LoadableImage: View {
         var url : URL?
-        var widthPo : CGFloat?
-        var heightPo : CGFloat?
         
         var body: some View {
-            AsyncImage(url: url) { phase in
+            #warning("İmage Fetcher")
+            AsyncImage(url: url,transaction: .init()) { phase in
                 switch phase {
                 case .success(let image):
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
-                        .frame(width: widthPo, height: heightPo)
                 case .failure:
                     Image(systemName: "house")
                         .resizable()
@@ -31,7 +29,7 @@ struct LoadableImage: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
                         .scaleEffect(1.2)
-                    
+
                 @unknown default:
                     EmptyView()
                 }

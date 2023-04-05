@@ -21,7 +21,7 @@ enum MovieEndPoints: TargetEndpointProtocol {
         
         switch self{
         case .movieListView(ListEndpoint: let movieListEndpoint): return movieListEndpoint.path
-//        case .discover(discoverType: let discType, sort: let sort) : return  "/3/\(discType)/\(sort)"
+            
         }
         
     }
@@ -39,10 +39,9 @@ enum MovieEndPoints: TargetEndpointProtocol {
 }
 
 //MARK: -  Endpoint for ListView
-enum MoviesListEndPoints {
+enum MoviesListEndPoints: String, CaseIterable{
     case popular
     case nowPlaying
-//    case lastest
     case upComing
     case topRated
     
@@ -56,5 +55,9 @@ enum MoviesListEndPoints {
         case .topRated: return "/3/movie/top_rated"
         }
         
+    }
+
+    var dataType: FetchedDataType {
+        .init(rawValue: self.rawValue)!
     }
 }

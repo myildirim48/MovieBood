@@ -17,27 +17,31 @@ struct MoveListView: View {
                     NavigationLink {
                         MovieDetailView()
                     } label: {
-                        ImageSlider(popularMovies: viewModel.popularMovies)
+                        ImageSlider(popularMovies: viewModel.movies[.popular] ?? [],height: 550,width: 450)
                     }
                     
                     HorizontalMovies(dataType: .nowPlaying,
-                                     movies: viewModel.nowPlayingMovies,
-                                     lastSeenMovie: $viewModel.lastSeenNowPlayingMovies)
- 
-//                    HorizontalMovies(dataType: .upComing, movies: viewModel.upComingMovies, lastSeenMovie:$viewModel.lastSeenData)
-//
-//                    HorizontalMovies(dataType: .topRated, movies: viewModel.topRatedMovies)
-//
-                    }.onAppear {
-                        viewModel.fetchMovies()
-                        //TODO: - Pagination
-                    }
+                                     movies: viewModel.movies[.nowPlaying] ?? [] ,
+                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+                    
+//                    HorizontalMovies(dataType: .topRated,
+//                                     movies: viewModel.movies[.topRated] ?? [],
+//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+//                    HorizontalMovies(dataType: .upComing,
+//                                     movies: viewModel.movies[.upComing] ?? [],
+//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+                }
+                .onAppear {
+                    viewModel.fetchMovies()
+                    //TODO: - Pagination
+                }
+//                .refreshable {
+//                    viewModel.fetchMovies()
+//                }
             }
             .padding(.bottom, 30)
             .padding(.top, 10)
             .background(.black)
-//            .navigationBarHidden(true)
-//            .ignoresSafeArea()
         }
     }
 }
@@ -52,33 +56,36 @@ struct HorizontalMovies: View {
     var dataType: FetchedDataType
     var movies: [MovieResultUIModel]
     @Binding var lastSeenMovie: MovieResultUIModel?
-//    var onNextPage: ((MovieResultUIModel) -> Void)?
-    
+
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading,spacing: 0) {
             
             Text(dataType.title)
-                .font(.custom("PlayfairDisplay-Bold", size: 25))
+                .font(.custom("PlayfairDisplay-Bold", size: 23))
                 .padding(.horizontal)
                 .foregroundColor(.white)
-                .padding(.top, 20)
+//                .padding(.top, 5)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack{
+                
+                LazyHStack(){
                     ForEach(movies) { movie in
                         NavigationLink(
                             destination: MovieDetailView(),
                             label: {
-                                LoadableImage(url: URL(string: movie.returnImgURL), widthPo: 140, heightPo: 240 )
-                                    .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 10)
+//
+                                TabView {
+                                        LoadableImage(url: URL(string: movie.returnImgURL))
+                                        .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 10)
+                                        
+                                }.frame(width: 140, height: 250)
+                                .tabViewStyle(.page)
                             })
                         .onAppear{
-//                                onNextPage?(movie)
-//                                lastSeenMovie = movie
-                            if lastSeenMovie == movie {
-                                print(movie.originalTitle)
-                            }
-                            }
+                            
+                            lastSeenMovie = movie
+                            
+                        }
 
                     }
                     .padding(.leading)

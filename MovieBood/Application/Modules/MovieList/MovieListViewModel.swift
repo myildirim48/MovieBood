@@ -8,6 +8,7 @@
 import Foundation
 import Resolver
 import Combine
+import SwiftUI
 
 extension MoveListView {
 
@@ -15,124 +16,64 @@ extension MoveListView {
         
         @Injected private var repository: MovieResultRepositoryProtocol
         
-        @Published private(set) var popularMovies: [MovieResultUIModel] = []
-        @Published private(set) var nowPlayingMovies: [MovieResultUIModel] = []
-        @Published private(set) var upComingMovies: [MovieResultUIModel] = []
-        @Published private(set) var topRatedMovies: [MovieResultUIModel] = []
+        @Published private(set) var nowPlayingMovies: [FetchedDataType:MovieResultUIModel] = [:]
         
-        @Published public var lastSeenDatapopularMovies : MovieResultUIModel?
-        @Published public var lastSeenNowPlayingMovies : MovieResultUIModel?
-        @Published public var lastSeenDataupComingMovies : MovieResultUIModel?
-        @Published public var lastSeenDatatopRatedMovies : MovieResultUIModel?
+        @Published public var lastNowPlayingMovie: MovieResultUIModel?
+        
+        @Published public var movies: [FetchedDataType: [MovieResultUIModel]] = [:]
+        
+        private var pagesCount: [FetchedDataType: Int ] = [:]
         
         private var cancellabes = Set<AnyCancellable>()
         init(){
-            $lastSeenNowPlayingMovies.sink { _ in
+            $lastNowPlayingMovie.sink { _ in
                 
             } receiveValue: { movie in
                 guard let movie else { return }
-                if movie == self.nowPlayingMovies.last {
-                    self.fetchNowPlaying(page: 2)
+                
+                print(movie.originalTitle!, "First : ")
+                print(self.nowPlayingMovies[movie.fetchedDataType ?? .nowPlaying]?.originalTitle, "Sec :")
+                
+                if movie == self.nowPlayingMovies[movie.fetchedDataType ?? .nowPlaying] {
+                    
+                    self.pagination(type: .nowPlaying)
                 }
             }.store(in: &cancellabes)
 
         }
-                
-        func nextPageHandler(movie: MovieResultUIModel) {
-            
-            guard let type = movie.fetchedDataType else { return }
-            
-            switch type {
-            case .popular:
-                break
-            case .nowPlaying:
-                DispatchQueue.main.async {
-                    if self.popularMovies.last == movie {
-                        self.fetchNowPlaying(page: 2)
-                    }
-                }
-            case .upComing:
-                break
-            case .topRated:
-                break
-            }
-        }
         
         func fetchMovies(){
-            fetchPopularMovies()
-            fetchNowPlaying()
-            fetchUpComingMovies()
-            fetchTopRatedMovies()
+            MoviesListEndPoints.allCases.forEach { type in
+                fetchMovies(endpoint: type, movieListType: type.dataType)
+            }
         }
         
         #warning("Pagination")
         func pagination(type: FetchedDataType){
-            switch type {
-            case .popular:
-                    fetchPopularMovies(page: 2) 
-            case .nowPlaying:
-                    fetchNowPlaying()
-            case .upComing:
-                fetchUpComingMovies(page: 2)
-            case .topRated:
-                fetchTopRatedMovies(page: 2)
-            }
+            fetchMovies(endpoint: .init(rawValue: type.rawValue)!, movieListType: type)
         }
         
-        func fetchPopularMovies(page:Int = 1){
-            repository.getMovies(page: page, endpoint: .popular, movieListType: .popular) { result in
+        func fetchMovies(endpoint: MoviesListEndPoints, movieListType: FetchedDataType) {
+            
+            var page = (pagesCount[endpoint.dataType] ?? 0) + 1
+            
+            repository.getMovies(page: page, endpoint: endpoint, movieListType: endpoint.dataType) { result in
                 switch result {
                 case .success(let model):
                     DispatchQueue.main.async {
-                        self.popularMovies += model
+                            self.movies[movieListType] = self.movies[movieListType] ?? [] + model
+                            print(self.movies[movieListType]?.count, "- COUNT")
+                
+                        self.pagesCount[endpoint.dataType] = self.pagesCount[endpoint.dataType] ?? 0 + 1
+                            self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
                     }
+                    
+
                 case .failure(let error):
                     print(error.localizedDescription)
                     //TODO: - Show the error to user
                 }
             }
         }
-        
-        func fetchNowPlaying(page:Int = 1) {
-            repository.getMovies(page: page, endpoint: .nowPlaying, movieListType: .nowPlaying) { result in
-                switch result {
-                case .success(let model):
-                    DispatchQueue.main.async {
-                        self.nowPlayingMovies.append(contentsOf: model)
-                        self.lastSeenNowPlayingMovies = self.nowPlayingMovies.last
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        func fetchUpComingMovies(page: Int = 1){
-            repository.getMovies(page: page, endpoint: .upComing, movieListType: .upComing) { result in
-                switch result {
-                case .success(let model):
-                    DispatchQueue.main.async {
-                        self.upComingMovies += model
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        func fetchTopRatedMovies(page: Int = 1){
-            repository.getMovies(page: page, endpoint: .topRated, movieListType: .topRated) { result in
-                switch result {
-                case .success(let model):
-                    DispatchQueue.main.async {
-                        self.topRatedMovies += model
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
     }
-    
-    
 }
