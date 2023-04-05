@@ -24,12 +24,12 @@ struct MoveListView: View {
                                      movies: viewModel.movies[.nowPlaying] ?? [] ,
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
                     
-//                    HorizontalMovies(dataType: .topRated,
-//                                     movies: viewModel.movies[.topRated] ?? [],
-//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
-//                    HorizontalMovies(dataType: .upComing,
-//                                     movies: viewModel.movies[.upComing] ?? [],
-//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+                    HorizontalMovies(dataType: .topRated,
+                                     movies: viewModel.movies[.topRated] ?? [],
+                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+                    HorizontalMovies(dataType: .topRated,
+                                     movies: viewModel.movies[.topRated] ?? [],
+                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
                 }
                 .onAppear {
                     viewModel.fetchMovies()

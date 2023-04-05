@@ -30,10 +30,7 @@ extension MoveListView {
                 
             } receiveValue: { movie in
                 guard let movie else { return }
-                
-                print(movie.originalTitle!, "First : ")
-                print(self.nowPlayingMovies[movie.fetchedDataType ?? .nowPlaying]?.originalTitle, "Sec :")
-                
+    
                 if movie == self.nowPlayingMovies[movie.fetchedDataType ?? .nowPlaying] {
                     
                     self.pagination(type: .nowPlaying)
@@ -62,8 +59,7 @@ extension MoveListView {
                 case .success(let model):
                     DispatchQueue.main.async {
                             self.movies[movieListType] = self.movies[movieListType] ?? [] + model
-                            print(self.movies[movieListType]?.count, "- COUNT")
-                
+                        page += 1
                         self.pagesCount[endpoint.dataType] = self.pagesCount[endpoint.dataType] ?? 0 + 1
                             self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
                     }
