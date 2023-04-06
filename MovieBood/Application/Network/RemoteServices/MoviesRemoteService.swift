@@ -18,7 +18,6 @@ protocol MoviesRemoteServiceProtocol {
     
     typealias TargetEndPoint = MovieEndPoints
 
-#warning("Movie List Type ????")
      func getMoviesFromRemote(page: Int,
                               endpoint: MoviesListEndPoints,
                               movieListType: FetchedDataType,

@@ -27,22 +27,22 @@ struct MoveListView: View {
                     HorizontalMovies(dataType: .topRated,
                                      movies: viewModel.movies[.topRated] ?? [],
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
-                    HorizontalMovies(dataType: .topRated,
-                                     movies: viewModel.movies[.topRated] ?? [],
+                    
+                    HorizontalMovies(dataType: .upComing,
+                                     movies: viewModel.movies[.upComing] ?? [],
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
                 }
+
                 .onAppear {
                     viewModel.fetchMovies()
                     //TODO: - Pagination
                 }
-//                .refreshable {
-//                    viewModel.fetchMovies()
-//                }
             }
             .padding(.bottom, 30)
             .padding(.top, 10)
             .background(.black)
         }
+
     }
 }
 
@@ -56,7 +56,7 @@ struct HorizontalMovies: View {
     var dataType: FetchedDataType
     var movies: [MovieResultUIModel]
     @Binding var lastSeenMovie: MovieResultUIModel?
-
+    
     var body: some View {
         VStack(alignment: .leading,spacing: 0) {
             
@@ -64,7 +64,7 @@ struct HorizontalMovies: View {
                 .font(.custom("PlayfairDisplay-Bold", size: 23))
                 .padding(.horizontal)
                 .foregroundColor(.white)
-//                .padding(.top, 5)
+            //                .padding(.top, 5)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
@@ -73,20 +73,20 @@ struct HorizontalMovies: View {
                         NavigationLink(
                             destination: MovieDetailView(),
                             label: {
-//
+                                //
                                 TabView {
-                                        LoadableImage(url: URL(string: movie.returnImgURL))
+                                    LoadableImage(url: URL(string: movie.returnImgURL), defaultImage: .movie)
                                         .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 10)
-                                        
+                                    
                                 }.frame(width: 140, height: 250)
-                                .tabViewStyle(.page)
+                                    .tabViewStyle(.page)
                             })
                         .onAppear{
                             
                             lastSeenMovie = movie
                             
                         }
-
+                        
                     }
                     .padding(.leading)
                 }

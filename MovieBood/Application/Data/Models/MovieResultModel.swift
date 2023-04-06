@@ -14,7 +14,7 @@ struct MovieResultModel: Codable,Equatable {
     let posterPath, releaseDate: String?
     let voteAverage: Double?
 
-#warning("Tell me master really do i need to use Equatable here")
+// arning("Tell me master really do i need to use Equatable here
     
     static func == (lhs:MovieResultModel, rhs: MovieResultModel)-> Bool {
         return lhs.id == rhs.id

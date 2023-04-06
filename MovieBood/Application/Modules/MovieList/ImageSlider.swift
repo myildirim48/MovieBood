@@ -17,7 +17,7 @@ struct ImageSlider: View {
         TabView {
             ForEach(popularMovies) { movie in
                 VStack(alignment: .leading) {
-                LoadableImage(url: URL(string: movie.returnImgURL))
+                    LoadableImage(url: URL(string: movie.returnImgURL), defaultImage: .movie)
                     }
                 }
         }

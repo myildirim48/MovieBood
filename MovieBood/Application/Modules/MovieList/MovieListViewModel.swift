@@ -11,15 +11,13 @@ import Combine
 import SwiftUI
 
 extension MoveListView {
-
+    
     @MainActor class MovieListViewModel: ObservableObject {
         
         @Injected private var repository: MovieResultRepositoryProtocol
         
         @Published private(set) var nowPlayingMovies: [FetchedDataType:MovieResultUIModel] = [:]
-        
         @Published public var lastNowPlayingMovie: MovieResultUIModel?
-        
         @Published public var movies: [FetchedDataType: [MovieResultUIModel]] = [:]
         
         private var pagesCount: [FetchedDataType: Int ] = [:]
@@ -30,24 +28,23 @@ extension MoveListView {
                 
             } receiveValue: { movie in
                 guard let movie else { return }
-    
-                if movie == self.nowPlayingMovies[movie.fetchedDataType ?? .nowPlaying] {
-                    
-                    self.pagination(type: .nowPlaying)
+                
+                if movie == self.nowPlayingMovies[movie.fetchedDataType!] {
+                    self.fetchMovies()
                 }
             }.store(in: &cancellabes)
-
+            
         }
         
         func fetchMovies(){
-            MoviesListEndPoints.allCases.forEach { type in
-                fetchMovies(endpoint: type, movieListType: type.dataType)
+            
+            guard let movieType = lastNowPlayingMovie?.fetchedDataType else {
+                MoviesListEndPoints.allCases.forEach { type in
+                    fetchMovies(endpoint: type, movieListType: type.dataType)
+                }
+                return
             }
-        }
-        
-        #warning("Pagination")
-        func pagination(type: FetchedDataType){
-            fetchMovies(endpoint: .init(rawValue: type.rawValue)!, movieListType: type)
+            fetchMovies(endpoint: .init(rawValue: movieType.rawValue)!, movieListType: movieType)
         }
         
         func fetchMovies(endpoint: MoviesListEndPoints, movieListType: FetchedDataType) {
@@ -57,14 +54,14 @@ extension MoveListView {
             repository.getMovies(page: page, endpoint: endpoint, movieListType: endpoint.dataType) { result in
                 switch result {
                 case .success(let model):
+                    
                     DispatchQueue.main.async {
-                            self.movies[movieListType] = self.movies[movieListType] ?? [] + model
+                        self.movies[movieListType] = self.movies[movieListType] ?? [] + model
                         page += 1
                         self.pagesCount[endpoint.dataType] = self.pagesCount[endpoint.dataType] ?? 0 + 1
-                            self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
+                        self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
                     }
                     
-
                 case .failure(let error):
                     print(error.localizedDescription)
                     //TODO: - Show the error to user

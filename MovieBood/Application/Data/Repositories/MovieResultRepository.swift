@@ -24,7 +24,6 @@ final class MovieResultRepository: MovieResultRepositoryProtocol {
                    endpoint: MoviesListEndPoints,
                    movieListType: FetchedDataType,
                      handler: @escaping (Result<[MovieResultUIModel], Error>) -> Void) {
-        #warning("Movie List Type ????")
         service.getMoviesFromRemote(page: page, endpoint: endpoint, movieListType: movieListType) { result in
             switch result{
             case .success(let response):

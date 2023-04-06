@@ -8,16 +8,15 @@
 import Foundation
 struct MovieResultUIModel: Identifiable,Equatable{
 
-#warning(" Because of the identifiable without this foreach gives an error")
     let id = UUID()
-    
     let movieID: Int
     let fetchedDataType: FetchedDataType?
     let originalTitle: String?
     let posterPath, releaseDate: String?
     let voteAverage: Double?
     
-//#warning("Tell me master really do i need to use Equatable here")
+    
+// arning("Tell me master really do i need to use Equatable here
 //
 //    static func == (lhs:MovieResultUIModel, rhs: MovieResultUIModel)-> Bool {
 //        return lhs.id == rhs.id
