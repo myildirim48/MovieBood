@@ -30,15 +30,15 @@ struct MovieDetailView: View {
 
                 //MARK: -  Middle Info
                 VStack(alignment: .leading ,spacing: 30) {
-                    DetailInfoView()
+                    DetailInfoView(movie: viewModel.movie)
                     
                     StrokeLine()
                     
-                    AvatarListView(imgsURLString: "/eUDvzwxbcMbTcPnSmRfnL1ORZrK.jpg", sectionName:"Director")
+                    AvatarListView(section: .directors, movie: viewModel.team[.directors] ?? [] )
                     
                         .padding(.bottom,40)
                     
-                    AvatarListView(imgsURLString: "/eUDvzwxbcMbTcPnSmRfnL1ORZrK.jpg", sectionName:"Stars")
+                    AvatarListView(section: .producers, movie: viewModel.team[.producers] ?? [])
                     
                     StrokeLine()
                     
@@ -114,12 +114,12 @@ struct InfoView: View {
 
 struct AvatarListView: View {
     
-    var sectionName : String
-    var movie: MovieDetailUIModel
+    var section : CrewType
+    var movie: [MovieCrew]
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(sectionName)
+            Text(section.title)
                 .foregroundColor(.white)
                 .font(.system(size: 20))
                 .fontWeight(.semibold)
@@ -127,8 +127,8 @@ struct AvatarListView: View {
             ScrollView(.horizontal,showsIndicators: false){
                 
                 LazyHStack(spacing: 12) {
-                    ForEach(movie.directors) { movie in
-                        AvatarImageView(size: 76, name: "A. Skywalker")
+                    ForEach(movie) { movie in
+                        AvatarImageView(size: 76, name: "A. Skywalker", imgUrl: movie.profilePath)
                     }
 
                 }
@@ -152,9 +152,10 @@ struct StrokeLine: View {
 }
 
 struct DetailInfoView: View {
+    var movie: MovieDetailUIModel
     var body: some View {
         VStack(alignment: .leading){
-            Text("İngiliz Kemal")
+            Text(movie.title ?? "")
                 .foregroundColor(.white)
                 .font(.title)
                 .fontWeight(.bold)
@@ -164,13 +165,13 @@ struct DetailInfoView: View {
             
             VStack(alignment: .leading,spacing: 50) {
                 HStack(spacing: 170) {
-                    InfoView(infoType: "Duration", value: "2hours 23min", size: 18)
+                    InfoView(infoType: "Duration", value: movie.runtimeUI, size: 18)
                     
-                    InfoView(infoType: "Language", value: "English", size: 18)
+                    InfoView(infoType: "Language", value: movie.originalLanguageUI, size: 18)
                 }
                 
                 HStack(spacing: 215){
-                    InfoView(infoType: "Genre", value: "Drama", size: 18)
+                    InfoView(infoType: "Genre", value: movie.genresUI, size: 18)
                     InfoView(infoType: "Age", value: "+15", size: 18)
                     
                 }
@@ -178,11 +179,11 @@ struct DetailInfoView: View {
                 VStack(alignment: .leading,spacing: 30) {
                     
                     
-                    InfoView(infoType: "Stroy", value: "Synopsis. In 1947, Andy Dufresne (Tim Robbins), a banker in Maine, is convicted of murdering his wife and her lover, a golf pro. Since the state of Maine has no death penalty, he is given two consecutive life sentences and sent to the notoriously harsh Shawshank Prison.", size: 20)
+                    InfoView(infoType: "Stroy", value: movie.overview, size: 20)
                     
                     
                     
-                    InfoView(infoType: "IMDb Rating", value: "9.3 / 10", size: 24)
+                    InfoView(infoType: "IMDb Rating", value: "\(movie.voteAvarageUI) / 10", size: 24)
                 }
             }
         }

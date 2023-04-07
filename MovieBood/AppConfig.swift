@@ -14,7 +14,7 @@ enum AppEnvironment {
 
 final class AppConfig {
     
-    static var apikey = "249671eff0295b9410c95cbf7aabbef4"
+    static var apikey = "YOUR_API_KEY"
     
     static var configuration: AppEnvironment {
         #if DEVELOPMENT

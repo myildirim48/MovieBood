@@ -32,10 +32,21 @@ extension MovieDetailView {
                 }
             }
         }
-        
-        func matchTeam(movie: MovieDetailUIModel){
+        func fetchCrew() {
             CrewType.allCases.forEach { type in
-                
+                matchTeam(Crew: type)
+            }
+        }
+        func matchTeam(Crew: CrewType){
+            switch Crew {
+            case .crew:
+                team[.crew] = movie.crew
+            case .directors:
+                team[.directors] = movie.directors
+            case .producers:
+                team[.producers] = movie.producers
+            case .screenWriters:
+                team[.screenWriters] = movie.screenWriters
             }
         }
     }

@@ -11,11 +11,10 @@ struct AvatarImageView: View {
     
     var size: CGFloat
     var name: String?
-    
+    var imgUrl: String?
     var body: some View {
        VStack {
-            Image("default-avatar")
-                .resizable()
+           LoadableImage(url: URL(string: imgUrl ?? ""),defaultImage: .avatar)
                 .scaledToFill()
                 .frame(width: size,height: size)
                 .background(Color.white)
@@ -41,7 +40,7 @@ struct AvatarImageView: View {
 
 struct AvatarImageView_Previews: PreviewProvider {
     static var previews: some View {
-        AvatarImageView(size: 90, name: "Master Yoda")
+        AvatarImageView(size: 90, name: "Master Yoda", imgUrl: "asdasd")
         
     }
 }

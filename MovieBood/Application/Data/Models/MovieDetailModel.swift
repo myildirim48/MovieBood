@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetailModel: Codable,Equatable {
+struct MovieDetailModel: Codable, Equatable {
     
     static func == (lhs: MovieDetailModel, rhs: MovieDetailModel) -> Bool {
         lhs.id == rhs.id
@@ -25,7 +25,10 @@ struct MovieDetailModel: Codable,Equatable {
     let releaseDate: String?
     let profilePath: String?
     let tagline: String?
+    let originalLanguage: String?
+    let genres: [Genre]?
 
+    
     let credits: MovieCredit?
     let videos: MovieVideoResponse?
 
@@ -45,17 +48,24 @@ struct MovieCast: Codable, Identifiable {
     let id: Int
     let character: String
     let name: String
+    let profilePath: String?
 }
 
 struct MovieCrew: Codable, Identifiable {
     let id: Int
     let job: String
     let name: String
+    let profilePath: String?
 }
 
 struct MovieVideoResponse: Codable {
     
     let results: [MovieVideo]
+}
+
+struct Genre: Codable {
+    let id: Int
+    let name: String
 }
 
 struct MovieVideo: Codable, Identifiable {

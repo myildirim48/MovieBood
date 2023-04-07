@@ -34,14 +34,12 @@ struct LoadableImage: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(10)
-                        
-                    
                 case .failure:
                     Image(defaultImage.name)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .cornerRadius(8)
-                        .frame(width: 85, height: 85)
+//                        .frame(width: 85, height: 85)
                     Text("Image not found...")
                         .foregroundColor(.secondary)
                         .font(.system(size: 14,weight: .semibold))

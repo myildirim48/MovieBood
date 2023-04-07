@@ -11,15 +11,18 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     let id: Int
     let title: String?
     
-    let backdropPath: String?
-    let posterPath: String?
+    private let backdropPath: String?
+    private let posterPath: String?
     let overview: String?
-    let voteAverage: Double?
+    private let voteAverage: Double?
     let voteCount: Int?
-    let runtime: Int?
+    private let runtime: Int?
     let releaseDate: String?
-    let profilePath: String?
+    private let profilePath: String?
     let tagline: String?
+    private let originalLanguage: String?
+    private let genres: [Genre]?
+
 
     let credits: MovieCredit?
     let videos: MovieVideoResponse?
@@ -31,6 +34,29 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     var imgUrl: String {
             return AppConfig.imageURL + (backdropPath ?? "")
     }
+    var runtimeUI: String {
+        let hour = String((runtime ?? 0) / 60)
+        let mins = String((runtime ?? 0) % 60)
+        
+        return"\(hour) hours \(mins) mins"
+        
+    }
+    
+    var genresUI: String {
+        return genres?.map({ $0.name }).joined(separator: ", ") ?? ""
+    }
+    
+    var voteAvarageUI: String{
+        return String(voteAverage ?? 0.0)
+    }
+//    func runtimeToString() -> String {
+//        
+//    }
+    
+    var originalLanguageUI: String{
+        return originalLanguage?.uppercased() ?? ""
+    }
+    
     
     //MARK: - Credits,Videos
     var cast: [MovieCast]? {
@@ -78,12 +104,12 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     
     
        static var mock:Self {
-           return MovieDetailUIModel(id: 123, title: "titleMock", backdropPath: "", posterPath: "", overview: "overviewMock", voteAverage: 12.3, voteCount: 12, runtime: 120, releaseDate: "12-03-1962", profilePath: "", tagline: "TaglineMock", credits: MovieCredit?.none, videos: MovieVideoResponse?.none)
+           return MovieDetailUIModel(id: 123, title: "titleMock", backdropPath: "", posterPath: "", overview: "overviewMock", voteAverage: 12.3, voteCount: 12, runtime: 120, releaseDate: "12-03-1962", profilePath: "", tagline: "TaglineMock", originalLanguage: "en", genres: [.init(id: 1, name: "Dram")], credits: MovieCredit?.none, videos: MovieVideoResponse?.none)
        }
     
     static func convert(from response: MovieDetailModel) -> MovieDetailUIModel {
             
-            return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, profilePath: response.profilePath, tagline: response.tagline, credits: response.credits, videos: response.videos)
+        return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, profilePath: response.profilePath, tagline: response.tagline, originalLanguage: "en", genres: response.genres, credits: response.credits, videos: response.videos)
         
     }
 }

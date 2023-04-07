@@ -13,7 +13,7 @@ struct ReviewCell: View {
             NameBackgroundView()
             VStack{
                 HStack {
-                    AvatarImageView(size: 40)
+                    AvatarImageView(size: 40, imgUrl: "url")
                     VStack(alignment: .leading) {
                         Text("Name")
                             .foregroundColor(.white)
