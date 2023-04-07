@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ImageSlider: View {
     
-    var popularMovies: [MovieResultUIModel]
+    var popularMovies: [MoviesUIModel]
     var height: CGFloat
     var width: CGFloat
     var body: some View {
@@ -35,7 +35,7 @@ struct ImageSlider: View {
 
 struct ImageSlider_Previews: PreviewProvider {
     static var previews: some View {
-        ImageSlider(popularMovies: MovieResultUIModel.mocModelArr,height: 250,width: 150)
+        ImageSlider(popularMovies: MoviesUIModel.mocModelArr,height: 250,width: 150)
     }
 }
 

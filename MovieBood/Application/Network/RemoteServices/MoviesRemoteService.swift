@@ -11,7 +11,7 @@ protocol MoviesRemoteServiceProtocol {
     func getMoviesFromRemote(page: Int,
                              endpoint: MoviesListEndPoints,
                              movieListType: FetchedDataType,
-                          handler: @escaping (Result<MovieResponse<MovieResultModel>, Error>) -> Void)
+                          handler: @escaping (Result<MovieResponse<MoviesModel>, Error>) -> Void)
 }
 
  final class MoviesRemoteService: MoviesRemoteServiceProtocol,Requestable {
@@ -21,7 +21,7 @@ protocol MoviesRemoteServiceProtocol {
      func getMoviesFromRemote(page: Int,
                               endpoint: MoviesListEndPoints,
                               movieListType: FetchedDataType,
-                          handler: @escaping (Result<MovieResponse<MovieResultModel>, Error>) -> Void){
+                          handler: @escaping (Result<MovieResponse<MoviesModel>, Error>) -> Void){
         
          var requestObject = TargetEndPoint.movieListView(ListEndpoint: endpoint).commonRequestObject
          requestObject.parameters["page"] = String(page)

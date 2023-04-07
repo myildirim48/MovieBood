@@ -40,11 +40,11 @@ final class AppConfig {
     static var imageURL: String {
         switch configuration {
         case .development:
-            return "image.tmdb.org/t/p/w500/"
+            return "https://image.tmdb.org/t/p/w500"
         case .staging:
-            return "image.tmdb.org/t/p/w500/"
+            return "https://image.tmdb.org/t/p/w500"
         case .production:
-            return "image.tmdb.org/t/p/w500/"
+            return "https://image.tmdb.org/t/p/w500"
         }
     }
 }

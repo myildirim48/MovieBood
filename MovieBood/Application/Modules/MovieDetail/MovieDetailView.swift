@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct MovieDetailView: View {
+    
+    @ObservedObject private var viewModel = MovieDetailViewModel()
+    
     var body: some View {
         ScrollView {
             VStack{
@@ -15,13 +18,14 @@ struct MovieDetailView: View {
                    
                     //MARK: -  Top Poster
                     ZStack {
-                        LoadableImage(url: URL(string: "https://image.tmdb.org/t/p/w500/9mnXOxmkZSQCHjprx47CnamBEOk.jp2g"), defaultImage: .movie)
+                        LoadableImage(url: URL(string: viewModel.movie.imgUrl), defaultImage: .movie)
                             .shadow(color: .init(white: 1.0, opacity: 0.5), radius: 10)
                             .frame(width: 459, height: 600)
                     }.padding(.bottom,-50)
                     
                     LinearGradient(gradient: Gradient(colors: [.clear, .black,.black]), startPoint: .top, endPoint: .bottom)
                         .frame(height: 90)
+                    
                 }.padding(.bottom,-50)
 
                 //MARK: -  Middle Info
@@ -83,8 +87,6 @@ struct MovieDetailView_Previews: PreviewProvider {
     }
 }
 
-
-
 struct InfoView: View {
     
     var infoType: String
@@ -111,8 +113,9 @@ struct InfoView: View {
 }
 
 struct AvatarListView: View {
-    var imgsURLString : String
+    
     var sectionName : String
+    var movie: MovieDetailUIModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -124,11 +127,10 @@ struct AvatarListView: View {
             ScrollView(.horizontal,showsIndicators: false){
                 
                 LazyHStack(spacing: 12) {
-                    ForEach(1..<8){ _ in
+                    ForEach(movie.directors) { movie in
                         AvatarImageView(size: 76, name: "A. Skywalker")
-                        
                     }
-                    
+
                 }
             }
         }

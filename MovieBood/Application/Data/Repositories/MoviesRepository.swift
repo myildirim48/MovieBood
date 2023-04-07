@@ -8,26 +8,32 @@
 import Foundation
 import Resolver
 
-protocol MovieResultRepositoryProtocol {
+protocol MoviesRepositoryProtocol {
+    
+    var totalPages : [FetchedDataType : Int] { get set }
     
     func getMovies(page:Int,
                    endpoint: MoviesListEndPoints,
                    movieListType: FetchedDataType,
-                     handler: @escaping (Result<[MovieResultUIModel],Error>) -> Void)
+                     handler: @escaping (Result<[MoviesUIModel],Error>) -> Void)
 }
 
-final class MovieResultRepository: MovieResultRepositoryProtocol {
+final class MoviesRepository: MoviesRepositoryProtocol {
+    var totalPages: [FetchedDataType : Int] = [:]
     
     @Injected private var service: MoviesRemoteServiceProtocol
-
+    
     func getMovies(page:Int,
                    endpoint: MoviesListEndPoints,
                    movieListType: FetchedDataType,
-                     handler: @escaping (Result<[MovieResultUIModel], Error>) -> Void) {
+                     handler: @escaping (Result<[MoviesUIModel], Error>) -> Void) {
         service.getMoviesFromRemote(page: page, endpoint: endpoint, movieListType: movieListType) { result in
             switch result{
             case .success(let response):
-                let uiModel = MovieResultUIModel.convert(from: response.results, dataType: movieListType)
+                let uiModel = MoviesUIModel.convert(from: response.results, dataType: movieListType)
+                
+                self.totalPages[movieListType] = response.totalPages
+                
                 handler(.success(uiModel))
             case .failure(let error):
                 handler(.failure(error))

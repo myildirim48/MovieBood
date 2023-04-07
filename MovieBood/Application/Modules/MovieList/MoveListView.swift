@@ -10,6 +10,7 @@ import SwiftUI
 struct MoveListView: View {
     
     @ObservedObject private var viewModel = MovieListViewModel()
+    
     var body: some View {
         NavigationView {
             ScrollView{
@@ -21,16 +22,16 @@ struct MoveListView: View {
                     }
                     
                     HorizontalMovies(dataType: .nowPlaying,
-                                     movies: viewModel.movies[.nowPlaying] ?? [] ,
+                                     movies: $viewModel.movies[.nowPlaying],
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
                     
-                    HorizontalMovies(dataType: .topRated,
-                                     movies: viewModel.movies[.topRated] ?? [],
-                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
-                    
-                    HorizontalMovies(dataType: .upComing,
-                                     movies: viewModel.movies[.upComing] ?? [],
-                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+//                    HorizontalMovies(dataType: .topRated,
+//                                     movies: viewModel.movies[.topRated] ?? [],
+//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+//
+//                    HorizontalMovies(dataType: .upComing,
+//                                     movies: viewModel.movies[.upComing] ?? [],
+//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
                 }
 
                 .onAppear {
@@ -54,8 +55,8 @@ struct ContentView_Previews: PreviewProvider {
 
 struct HorizontalMovies: View {
     var dataType: FetchedDataType
-    var movies: [MovieResultUIModel]
-    @Binding var lastSeenMovie: MovieResultUIModel?
+    @Binding var movies: [MoviesUIModel]?
+    @Binding var lastSeenMovie: MoviesUIModel?
     
     var body: some View {
         VStack(alignment: .leading,spacing: 0) {
@@ -69,7 +70,8 @@ struct HorizontalMovies: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 
                 LazyHStack(){
-                    ForEach(movies) { movie in
+                    
+                    ForEach((movies ?? MoviesUIModel.mocModelArr)) { movie in
                         NavigationLink(
                             destination: MovieDetailView(),
                             label: {

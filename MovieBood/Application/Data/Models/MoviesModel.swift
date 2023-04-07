@@ -7,16 +7,14 @@
 
 import Foundation
 
-struct MovieResultModel: Codable,Equatable {
+struct MoviesModel: Codable,Equatable {
     
     let id: Int
-    let originalTitle: String?
-    let posterPath, releaseDate: String?
-    let voteAverage: Double?
+    let posterPath: String?
 
 // arning("Tell me master really do i need to use Equatable here
     
-    static func == (lhs:MovieResultModel, rhs: MovieResultModel)-> Bool {
+    static func == (lhs:MoviesModel, rhs: MoviesModel)-> Bool {
         return lhs.id == rhs.id
     }
     

@@ -15,13 +15,13 @@ enum MovieEndPoints: TargetEndpointProtocol {
     }
     
     case movieListView(ListEndpoint: MoviesListEndPoints)
-//    case discover
+    case detail(id: String)
     
     var path: String {
         
         switch self{
         case .movieListView(ListEndpoint: let movieListEndpoint): return movieListEndpoint.path
-            
+        case .detail(id: let id): return "/3/movie/\(id)"
         }
         
     }

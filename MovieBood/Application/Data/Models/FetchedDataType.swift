@@ -21,4 +21,5 @@ enum FetchedDataType: String {
             return "Top Rated"
         }
     }
+
 }
