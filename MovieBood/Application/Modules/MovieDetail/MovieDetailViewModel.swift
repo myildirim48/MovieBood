@@ -8,6 +8,7 @@
 import Foundation
 import Resolver
 import SwiftUI
+import Combine
 
 extension MovieDetailView {
 
@@ -16,55 +17,65 @@ extension MovieDetailView {
         @Injected private var repository: MoveDetailRepositoryProtocol
         
         @Published public var movie: MovieDetailUIModel = MovieDetailUIModel.mock
+        @Published public var reviews: [MovieReviewsUIModel] = []
         
-        @Published public var team: [CrewType:[MovieCrew]] = [:]
+        @Published public var lastSeenReview: MovieReviewsUIModel?
+       private var pagesOfReviews: Int = 1
+
+        private var canellabes = Set<AnyCancellable>()
+        
+        init(){
+            $lastSeenReview.sink { _ in
+            } receiveValue: { [weak self] review in
+                guard let self else { return }
+                guard let review else { return }
+                if review == self.reviews.last && self.hasNextpage() {
+                    self.pagesOfReviews += 1
+                    self.fetchReviews(movieID: self.movie.id)
+                }
+            }.store(in: &canellabes)
+
+        }
+        
         
         func fetchDetails(movieID:Int){
-            
             repository.getMvoeiDetail(movieID: String(movieID)) { result in
                 switch result {
                 case .success(let movie):
                     DispatchQueue.main.async {
                         self.movie = movie
+                        self.fetchReviews(movieID: movieID)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
-        func fetchCrew() {
-            CrewType.allCases.forEach { type in
-                matchTeam(Crew: type)
+        
+        func fetchReviews(movieID: Int){
+            
+            repository.getReviews(movieID: String(movieID), page: String(pagesOfReviews)) { [weak self] result in
+                guard let self else { return }
+                switch result {
+                case .success(let success):
+                    DispatchQueue.main.async {
+                        self.reviews = success.sorted(by: { $0.createdAt ?? "" > $1.createdAt ?? ""})
+                    }
+                    if self.hasNextpage() {
+                        self.pagesOfReviews += 1
+                    }
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
             }
+
         }
-        func matchTeam(Crew: CrewType){
-            switch Crew {
-            case .crew:
-                team[.crew] = movie.crew
-            case .directors:
-                team[.directors] = movie.directors
-            case .producers:
-                team[.producers] = movie.producers
-            case .screenWriters:
-                team[.screenWriters] = movie.screenWriters
-            }
+        
+        
+        func hasNextpage() -> Bool {
+             pagesOfReviews < repository.totalPagesofReviews ? true : false
         }
-    }
+
+        
 }
-
-enum CrewType: String, CaseIterable {
-    case crew, directors, producers, screenWriters
-
-    var title : String {
-        switch self {
-        case .crew:
-            return "Crew"
-        case .directors:
-            return "Director"
-        case .producers:
-            return "Producer"
-        case .screenWriters:
-            return "Screen Writers"
-        }
-    }
 }

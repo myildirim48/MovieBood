@@ -16,12 +16,14 @@ enum MovieEndPoints: TargetEndpointProtocol {
     
     case movieListView(ListEndpoint: MoviesListEndPoints)
     case detail(id: String)
+    case review(id: String)
     
     var path: String {
         
         switch self{
         case .movieListView(ListEndpoint: let movieListEndpoint): return movieListEndpoint.path
         case .detail(id: let id): return "/3/movie/\(id)"
+        case .review(id: let id): return "/3/movie/\(id)/reviews"
         }
         
     }
@@ -50,7 +52,6 @@ enum MoviesListEndPoints: String, CaseIterable{
         switch self{
         case .popular: return "/3/movie/popular"
         case .nowPlaying: return "/3/movie/now_playing"
-//        case .lastest: return "/3/movie/latest"
         case .upComing: return "/3/movie/upcoming"
         case .topRated: return "/3/movie/top_rated"
         }

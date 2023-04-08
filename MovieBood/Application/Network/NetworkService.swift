@@ -17,12 +17,12 @@ final class NetworkService: BaseServiceProtocol {
                                handler: @escaping (Result<T,Error>) -> Void){
         do {
             let urlRequest = try requestObject.getURLRequest()
+            print(urlRequest.url!)
             urlSession.load(using: urlRequest) { data, response, error in
                 if let data = data {
                     do {
                         let object = try decoder.decode(T.self, from: data)
                         handler(.success(object))
-                        print(urlRequest.url!)
                     }catch{
                         handler(.failure(error))
                     }

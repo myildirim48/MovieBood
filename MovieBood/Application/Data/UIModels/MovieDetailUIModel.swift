@@ -18,12 +18,11 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     let voteCount: Int?
     private let runtime: Int?
     let releaseDate: String?
-    private let profilePath: String?
     let tagline: String?
     private let originalLanguage: String?
     private let genres: [Genre]?
-
-
+    
+    
     let credits: MovieCredit?
     let videos: MovieVideoResponse?
     
@@ -32,7 +31,7 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     }
     
     var imgUrl: String {
-            return AppConfig.imageURL + (backdropPath ?? "")
+        return AppConfig.imageURL + (posterPath ?? "")
     }
     var runtimeUI: String {
         let hour = String((runtime ?? 0) / 60)
@@ -47,15 +46,13 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     }
     
     var voteAvarageUI: String{
-        return String(voteAverage ?? 0.0)
+        return String(format: "%.1f", voteAverage ?? 0.0)
     }
-//    func runtimeToString() -> String {
-//        
-//    }
     
     var originalLanguageUI: String{
         return originalLanguage?.uppercased() ?? ""
     }
+
     
     
     //MARK: - Credits,Videos
@@ -63,6 +60,20 @@ struct MovieDetailUIModel:Equatable,MockableModel {
         credits?.cast
     }
     
+    
+    func convert(from movieCast:[MovieCast]?) -> [MovieCrew]{
+        
+        guard let cast = movieCast else  {
+            return [MovieCrew(id: 1, job: "DetailUIModel", name: "Detail UI Model", profilePath: "No-URL")]
+        }
+        
+        return cast.map { model in
+            return MovieCrew(id: model.id, job: model.character, name: model.name, profilePath: model.profilePath)
+        }
+
+       }
+
+   
     var crew: [MovieCrew]? {
         credits?.crew
     }
@@ -74,8 +85,10 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     var producers: [MovieCrew]? {
         crew?.filter { $0.job.lowercased() == "producer" }
     }
-    
-    var screenWriters: [MovieCrew]? {
+    var editor: [MovieCrew]? {
+        crew?.filter { $0.job.lowercased() == "editor" }
+    }
+    var story: [MovieCrew]? {
         crew?.filter { $0.job.lowercased() == "story" }
     }
     
@@ -83,33 +96,17 @@ struct MovieDetailUIModel:Equatable,MockableModel {
         videos?.results.filter { $0.youtubeURL != nil }
     }
     
-    //Rating,Score
-    var ratingTextUI: String {
-        let rating = Int(voteAverage ?? 0)
-        let ratingText = (0..<rating).reduce("") { (acc, _) -> String in
-            return acc + "★"
-        }
-        return ratingText
-    }
-    
-    var scoreTextUi: String {
-        guard ratingTextUI.count > 0 else {
-            return "n / a"
-        }
-        return "\(ratingTextUI.count) / 10"
-    }
-    
-    
     //MARK: - Mockdata
     
     
-       static var mock:Self {
-           return MovieDetailUIModel(id: 123, title: "titleMock", backdropPath: "", posterPath: "", overview: "overviewMock", voteAverage: 12.3, voteCount: 12, runtime: 120, releaseDate: "12-03-1962", profilePath: "", tagline: "TaglineMock", originalLanguage: "en", genres: [.init(id: 1, name: "Dram")], credits: MovieCredit?.none, videos: MovieVideoResponse?.none)
-       }
+    static var mock:Self {
+        return MovieDetailUIModel(id: 123, title: "titleMock", backdropPath: "", posterPath: "", overview: "overviewMock", voteAverage: 12.3, voteCount: 12, runtime: 120, releaseDate: "12-03-1962", tagline: "TaglineMock", originalLanguage: "en", genres: [.init(id: 1, name: "Dram")], credits: MovieCredit?.none, videos: MovieVideoResponse?.none)
+    }
     
     static func convert(from response: MovieDetailModel) -> MovieDetailUIModel {
-            
-        return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, profilePath: response.profilePath, tagline: response.tagline, originalLanguage: "en", genres: response.genres, credits: response.credits, videos: response.videos)
+        
+        return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, tagline: response.tagline, originalLanguage: "en", genres: response.genres, credits: response.credits, videos: response.videos)
         
     }
 }
+

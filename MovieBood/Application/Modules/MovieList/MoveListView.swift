@@ -15,25 +15,24 @@ struct MoveListView: View {
         NavigationView {
             ScrollView{
                 VStack{
-                    NavigationLink {
-                        MovieDetailView()
-                    } label: {
-                        ImageSlider(popularMovies: viewModel.movies[.popular] ?? [],height: 550,width: 450)
-                    }
+                    VStack {
+                    ImageSlider(popularMovies: viewModel.movies[.popular] ?? [])
+    
+                }
+    
                     
                     HorizontalMovies(dataType: .nowPlaying,
                                      movies: $viewModel.movies[.nowPlaying],
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
                     
-//                    HorizontalMovies(dataType: .topRated,
-//                                     movies: viewModel.movies[.topRated] ?? [],
-//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
-//
-//                    HorizontalMovies(dataType: .upComing,
-//                                     movies: viewModel.movies[.upComing] ?? [],
-//                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
-                }
+                    HorizontalMovies(dataType: .topRated,
+                                     movies: $viewModel.movies[.topRated],
+                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
 
+                    HorizontalMovies(dataType: .upComing,
+                                     movies: $viewModel.movies[.upComing],
+                                     lastSeenMovie: $viewModel.lastNowPlayingMovie)
+                }
                 .onAppear {
                     viewModel.fetchMovies()
                     //TODO: - Pagination
@@ -73,7 +72,7 @@ struct HorizontalMovies: View {
                     
                     ForEach((movies ?? MoviesUIModel.mocModelArr)) { movie in
                         NavigationLink(
-                            destination: MovieDetailView(),
+                            destination: MovieDetailView(movieID: movie.movieID),
                             label: {
                                 //
                                 TabView {
@@ -84,9 +83,7 @@ struct HorizontalMovies: View {
                                     .tabViewStyle(.page)
                             })
                         .onAppear{
-                            
                             lastSeenMovie = movie
-                            
                         }
                         
                     }

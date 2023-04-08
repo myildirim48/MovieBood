@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import Foundation
 
-enum EmtypImage: String {
+enum EmtypImage {
+    
     case movie
     case avatar
     
@@ -30,20 +32,42 @@ struct LoadableImage: View {
             AsyncImage(url: url,transaction: .init()) { phase in
                 switch phase {
                 case .success(let image):
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(10)
+                    switch defaultImage {
+                    case .movie:
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(10)
+                        
+                    case .avatar:
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                    }
+
                 case .failure:
-                    Image(defaultImage.name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(8)
-//                        .frame(width: 85, height: 85)
-                    Text("Image not found...")
-                        .foregroundColor(.secondary)
-                        .font(.system(size: 14,weight: .semibold))
-                        .padding()
+                    
+                    switch defaultImage {
+                    case .movie:
+                        Image(defaultImage.name)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 85, height: 85)
+                        
+                        Text("Image not found...")
+                            .foregroundColor(.secondary)
+                            .font(.system(size: 14,weight: .semibold))
+                            .padding()
+                    case .avatar:
+                        Image(systemName: "person.fill")
+                            .resizable()
+                            .foregroundColor(.accentColor)
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+
+                    }
+
                 case .empty:
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
@@ -53,12 +77,13 @@ struct LoadableImage: View {
                     EmptyView()
                 }
             }
+
         }
     
 }
 
 struct LoadableImage_Previews: PreviewProvider {
     static var previews: some View {
-        LoadableImage( defaultImage: .avatar)
+        LoadableImage(url: URL(string: "asdas") ,defaultImage: .avatar)
     }
 }

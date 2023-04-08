@@ -10,15 +10,16 @@ import SwiftUI
 struct ImageSlider: View {
     
     var popularMovies: [MoviesUIModel]
-    var height: CGFloat
-    var width: CGFloat
+
     var body: some View {
         
         TabView {
             ForEach(popularMovies) { movie in
-                VStack(alignment: .leading) {
+                NavigationLink {
+                    MovieDetailView(movieID: movie.movieID)
+                } label: {
                     LoadableImage(url: URL(string: movie.returnImgURL), defaultImage: .movie)
-                    }
+                }
                 }
         }
         .shadow(color: .init(white: 0.5,opacity: 0.3), radius: 20)
@@ -35,7 +36,7 @@ struct ImageSlider: View {
 
 struct ImageSlider_Previews: PreviewProvider {
     static var previews: some View {
-        ImageSlider(popularMovies: MoviesUIModel.mocModelArr,height: 250,width: 150)
+        ImageSlider(popularMovies: MoviesUIModel.mocModelArr)
     }
 }
 

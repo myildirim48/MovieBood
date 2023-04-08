@@ -25,30 +25,24 @@ extension MoveListView {
         private var cancellabes = Set<AnyCancellable>()
         init(){
             $lastNowPlayingMovie.sink { _ in
-                
             } receiveValue: { movie in
                 guard let movie else { return }
-                
                 if movie == self.nowPlayingMovies[movie.fetchedDataType!] {
                     self.fetchMovies()
                 }
             }.store(in: &cancellabes)
-            
         }
         
-        
         func fetchMovies(){
-            
             guard let movieType = lastNowPlayingMovie?.fetchedDataType else {
                 MoviesListEndPoints.allCases.forEach { type in
                     fetchMovies(endpoint: type, movieListType: type.dataType)
                 }
                 return
             }
+            
             fetchMovies(endpoint: .init(rawValue: movieType.rawValue)!, movieListType: movieType)
         }
-        
-        
         
         func fetchMovies(endpoint: MoviesListEndPoints, movieListType: FetchedDataType) {
             

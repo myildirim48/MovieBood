@@ -9,17 +9,18 @@ import SwiftUI
 
 struct MovieDetailView: View {
     
+    let movieID: Int
     @ObservedObject private var viewModel = MovieDetailViewModel()
     
     var body: some View {
         ScrollView {
             VStack{
                 VStack{
-                   
+                    
                     //MARK: -  Top Poster
                     ZStack {
                         LoadableImage(url: URL(string: viewModel.movie.imgUrl), defaultImage: .movie)
-                            .shadow(color: .init(white: 1.0, opacity: 0.5), radius: 10)
+                            .aspectRatio(contentMode: .fit)
                             .frame(width: 459, height: 600)
                     }.padding(.bottom,-50)
                     
@@ -27,19 +28,21 @@ struct MovieDetailView: View {
                         .frame(height: 90)
                     
                 }.padding(.bottom,-50)
-
+                
                 //MARK: -  Middle Info
                 VStack(alignment: .leading ,spacing: 30) {
                     DetailInfoView(movie: viewModel.movie)
                     
                     StrokeLine()
-                    
-                    AvatarListView(section: .directors, movie: viewModel.team[.directors] ?? [] )
-                    
-                        .padding(.bottom,40)
-                    
-                    AvatarListView(section: .producers, movie: viewModel.team[.producers] ?? [])
-                    
+                    AvatarListView(section: "Directors",
+                                   movies: viewModel.movie.directors)
+                    AvatarListView(section: "Producer",
+                                   movies: viewModel.movie.producers)
+                    AvatarListView(section: "Editor",
+                                   movies: viewModel.movie.editor)
+                    AvatarListView(section: "Story",
+                                   movies: viewModel.movie.story)
+                    AvatarListView(section: "Cast", movies: viewModel.movie.convert(from: viewModel.movie.cast))
                     StrokeLine()
                     
                     //MARK: - Bottom Reviews
@@ -47,43 +50,29 @@ struct MovieDetailView: View {
                         InfoView(infoType:"Ratings & Reviews" , size: 24)
                         
                         VStack(alignment: .trailing) {
-                            Text("4.8")
+                            Text(viewModel.movie.voteAvarageUI)
                                 .foregroundColor(.lineStroke)
                                 .font(.system(size: 44,weight: .bold))
-                                
-                            
-                            Text("out of 5")
+                            Text("out of 10")
                                 .foregroundColor(.lineStroke)
                                 .font(.system(size: 15,weight: .bold))
-                                
                         }
+                        ReviewCell(reviews: $viewModel.reviews, lastSeenReview: $viewModel.lastSeenReview)
                         
-                        ScrollView(.horizontal,showsIndicators: false){
-            
-                            LazyHStack(spacing: 12) {
-                                ForEach(1..<8){ _ in
-                                    ReviewCell()
-                                    
-                                }
-                                
-                            }
-                        }
                     }.padding(.leading,5)
-                    
-                    
                 }.padding(.leading,45)
-                
-                
             }
-            
+        }.onAppear{
+            viewModel.fetchDetails(movieID: movieID)
         }
         .background(.black)
+        .navigationTitle(viewModel.movie.title ?? "")
     }
 }
 
 struct MovieDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MovieDetailView()
+        MovieDetailView(movieID: 677179)
     }
 }
 
@@ -91,7 +80,6 @@ struct InfoView: View {
     
     var infoType: String
     var value: String?
-    
     var size: CGFloat
     
     var body: some View {
@@ -107,37 +95,43 @@ struct InfoView: View {
                     .font(.system(size: size - 3))
                     .fontWeight(.medium)
             }
-
         }
     }
 }
 
 struct AvatarListView: View {
     
-    var section : CrewType
-    var movie: [MovieCrew]
+    var section : String
+    var movies: [MovieCrew]?
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(section.title)
+            
+            Text(section)
                 .foregroundColor(.white)
                 .font(.system(size: 20))
                 .fontWeight(.semibold)
+                .padding(.leading)
             
             ScrollView(.horizontal,showsIndicators: false){
-                
-                LazyHStack(spacing: 12) {
-                    ForEach(movie) { movie in
-                        AvatarImageView(size: 76, name: "A. Skywalker", imgUrl: movie.profilePath)
+                LazyHStack{
+                    ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
+                        NavigationLink {
+                            PersonDetailView(movie: movie)
+                        } label: {
+                            TabView {
+                                AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)
+                                    .shadow(color: .init(white: 0.5, opacity: 0.3), radius: 10)
+                            }.frame(height: 80)
+                            .tabViewStyle(.page)
+                        }
                     }
-
                 }
+
             }
         }
     }
-    
 }
-
 
 struct StrokeLine: View {
     var body: some View {
@@ -147,7 +141,6 @@ struct StrokeLine: View {
                 .frame( height: 1)
                 .padding(10)
         }
-        
     }
 }
 
@@ -155,44 +148,37 @@ struct DetailInfoView: View {
     var movie: MovieDetailUIModel
     var body: some View {
         VStack(alignment: .leading){
+            
             Text(movie.title ?? "")
                 .foregroundColor(.white)
                 .font(.title)
                 .fontWeight(.bold)
-                .frame(width: 250,height: 30,alignment: .leading)
+                .frame(width: 250,alignment: .leading)
+            
+            Text(movie.tagline ?? "")
+                .foregroundColor(.white)
+                .font(.caption)
+                .fontWeight(.semibold)
                 .padding(.bottom,20)
-            
-            
-            VStack(alignment: .leading,spacing: 50) {
-                HStack(spacing: 170) {
-                    InfoView(infoType: "Duration", value: movie.runtimeUI, size: 18)
-                    
-                    InfoView(infoType: "Language", value: movie.originalLanguageUI, size: 18)
+
+            VStack(spacing: 50) {
+                HStack{
+                    VStack(alignment: .leading,spacing: 30) {
+                        InfoView(infoType: "Duration", value: movie.runtimeUI, size: 18)
+                        InfoView(infoType: "Genre", value: movie.genresUI, size: 18)
+                    }
+                    Spacer()
+                    VStack(alignment: .leading,spacing: 30){
+                        InfoView(infoType: "Language", value: movie.originalLanguageUI, size: 18)
+                        InfoView(infoType: "Age", value: "+15", size: 18)
+                    }
                 }
-                
-                HStack(spacing: 215){
-                    InfoView(infoType: "Genre", value: movie.genresUI, size: 18)
-                    InfoView(infoType: "Age", value: "+15", size: 18)
-                    
-                }
-                
-                VStack(alignment: .leading,spacing: 30) {
-                    
-                    
+                VStack(alignment: .leading, spacing: 30) {
                     InfoView(infoType: "Stroy", value: movie.overview, size: 20)
-                    
-                    
-                    
-                    InfoView(infoType: "IMDb Rating", value: "\(movie.voteAvarageUI) / 10", size: 24)
+                    InfoView(infoType: "IMDb Rating", value: movie.voteAvarageUI, size: 24)
                 }
             }
-        }
-        
-        
-        
-        
-        
-        
-        .padding(.trailing, 40)
+        }.padding()
+            .padding(.trailing, 40)
     }
 }

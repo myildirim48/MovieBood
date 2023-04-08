@@ -42,6 +42,9 @@ struct MovieGenre: Codable {
 struct MovieCredit: Codable {
     let cast: [MovieCast]
     let crew: [MovieCrew]
+    
+    
+
 }
 
 struct MovieCast: Codable, Identifiable {
@@ -49,6 +52,7 @@ struct MovieCast: Codable, Identifiable {
     let character: String
     let name: String
     let profilePath: String?
+
 }
 
 struct MovieCrew: Codable, Identifiable {

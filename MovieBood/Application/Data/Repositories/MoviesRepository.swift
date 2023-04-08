@@ -10,7 +10,7 @@ import Resolver
 
 protocol MoviesRepositoryProtocol {
     
-    var totalPages : [FetchedDataType : Int] { get set }
+    var totalPages : [FetchedDataType : Int] { get }
     
     func getMovies(page:Int,
                    endpoint: MoviesListEndPoints,
@@ -30,11 +30,12 @@ final class MoviesRepository: MoviesRepositoryProtocol {
         service.getMoviesFromRemote(page: page, endpoint: endpoint, movieListType: movieListType) { result in
             switch result{
             case .success(let response):
-                let uiModel = MoviesUIModel.convert(from: response.results, dataType: movieListType)
-                
-                self.totalPages[movieListType] = response.totalPages
-                
-                handler(.success(uiModel))
+                DispatchQueue.main.async {
+                    let uiModel = MoviesUIModel.convert(from: response.results, dataType: movieListType)
+                    self.totalPages[movieListType] = response.totalPages
+                    handler(.success(uiModel))
+                }
+
             case .failure(let error):
                 handler(.failure(error))
             }
