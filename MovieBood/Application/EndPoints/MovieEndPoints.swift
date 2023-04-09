@@ -17,6 +17,7 @@ enum MovieEndPoints: TargetEndpointProtocol {
     case movieListView(ListEndpoint: MoviesListEndPoints)
     case detail(id: String)
     case review(id: String)
+    case person(id: String)
     
     var path: String {
         
@@ -24,6 +25,7 @@ enum MovieEndPoints: TargetEndpointProtocol {
         case .movieListView(ListEndpoint: let movieListEndpoint): return movieListEndpoint.path
         case .detail(id: let id): return "/3/movie/\(id)"
         case .review(id: let id): return "/3/movie/\(id)/reviews"
+        case .person(id: let id): return "/3/person/\(id)"
         }
         
     }

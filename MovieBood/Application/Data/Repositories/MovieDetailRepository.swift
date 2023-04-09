@@ -8,7 +8,7 @@
 import Foundation
 import Resolver
 
-protocol MoveDetailRepositoryProtocol{
+protocol MovieDetailRepositoryProtocol{
     
     func getMvoeiDetail(movieID:String
                         ,handler: @escaping(Result<MovieDetailUIModel,Error>) -> Void)
@@ -18,9 +18,12 @@ protocol MoveDetailRepositoryProtocol{
     func getReviews(movieID:String
                     ,page:String,
                     handler: @escaping(Result<[MovieReviewsUIModel], Error>) -> Void)
+    
+    func getPerson(personID: String,
+                   handler: @escaping(Result<PersonUIModel, Error>) -> Void)
 }
 
-final class MovieDetailRepository: MoveDetailRepositoryProtocol{
+final class MovieDetailRepository: MovieDetailRepositoryProtocol{
 
     @Injected private var service: MovieDetailRemoteServiceProtocol
     
@@ -54,5 +57,20 @@ final class MovieDetailRepository: MoveDetailRepositoryProtocol{
             }
         }
     }
+    
+    func getPerson(personID: String, handler: @escaping (Result<PersonUIModel, Error>) -> Void) {
+        service.fetchPerson(personID: personID) { result in
+            switch result {
+            case .success(let success):
+                DispatchQueue.main.async {
+                    let uiPerson = PersonUIModel.convert(from: success)
+                    handler(.success(uiPerson))
+                }
+            case .failure(let failure):
+                handler(.failure(failure))
+            }
+        }
+    }
+    
     
 }

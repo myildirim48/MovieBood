@@ -117,7 +117,7 @@ struct AvatarListView: View {
                 LazyHStack{
                     ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
                         NavigationLink {
-                            PersonDetailView(movie: movie)
+                            PersonDetailView(personID: movie.id)
                         } label: {
                             TabView {
                                 AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)

@@ -15,10 +15,13 @@ protocol MovieDetailRemoteServiceProtocol {
                     page: String,
                     handler: @escaping(Result<MovieResponse<MovieReviewsModel>,Error>) -> Void)
     
+    func fetchPerson(personID: String,
+                     handler: @escaping(Result<PersonModel, Error>) -> Void)
+    
 }
 
 final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol,Requestable {
-    
+
     typealias TargetEndPoint = MovieEndPoints
     
     func getMovieDetail(movieID: String,
@@ -38,4 +41,12 @@ final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol,Requesta
         request(with: requestObject, completionHandler: handler)
         
     }
+    
+    func fetchPerson(personID: String,
+                     handler: @escaping (Result<PersonModel, Error>) -> Void) {
+        let requestObject = TargetEndPoint.person(id: personID).commonRequestObject
+        request(with: requestObject, completionHandler: handler)
+    }
+    
+    
 }

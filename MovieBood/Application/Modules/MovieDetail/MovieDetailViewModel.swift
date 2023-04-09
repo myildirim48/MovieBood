@@ -14,7 +14,7 @@ extension MovieDetailView {
 
     @MainActor class MovieDetailViewModel: ObservableObject {
         
-        @Injected private var repository: MoveDetailRepositoryProtocol
+        @Injected private var repository: MovieDetailRepositoryProtocol
         
         @Published public var movie: MovieDetailUIModel = MovieDetailUIModel.mock
         @Published public var reviews: [MovieReviewsUIModel] = []

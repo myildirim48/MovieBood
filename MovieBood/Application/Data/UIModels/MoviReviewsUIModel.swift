@@ -17,7 +17,7 @@ struct MovieReviewsUIModel:Equatable,Identifiable {
         lhs.id == rhs.id
     }
     
-    //Rating,Score
+    //Rating,ScoreO
     var ratingTextUI: String {
         let rating = Int(authorDetails?.rating ?? 0)
         let ratingText = (0..<rating).reduce("") { (acc, _) -> String in
