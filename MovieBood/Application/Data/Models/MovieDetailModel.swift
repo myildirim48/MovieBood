@@ -72,17 +72,18 @@ struct Genre: Codable {
     let name: String
 }
 
-struct MovieVideo: Codable, Identifiable {
-    
+struct MovieVideo: Codable, Identifiable{
     let id: String
-    let key: String
-    let name: String
-    let site: String
+    let key: String?
+    let type: String?
+
+//    private let name: String?
+    private let site: String?
     
     var youtubeURL: URL? {
-        guard site == "YouTube" else {
+        guard site == "YouTube"  && type == "Featurette" else {
             return nil
         }
-        return URL(string: "https://youtube.com/watch?v=\(key)")
+        return URL(string: "https://www.youtube.com/watch?v=\(key ?? "")")
     }
 }

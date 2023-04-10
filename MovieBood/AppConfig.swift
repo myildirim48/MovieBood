@@ -14,7 +14,7 @@ enum AppEnvironment {
 
 final class AppConfig {
     
-    static var apikey = "YOUR_API_KEY"
+    static var apikey = "249671eff0295b9410c95cbf7aabbef4"
     
     static var configuration: AppEnvironment {
         #if DEVELOPMENT
@@ -40,7 +40,7 @@ final class AppConfig {
     static var imageURL: String {
         switch configuration {
         case .development:
-            return "https://image.tmdb.org/t/p/w500"
+            return "https://image.tmdb.org/t/p/original"
         case .staging:
             return "https://image.tmdb.org/t/p/w500"
         case .production:

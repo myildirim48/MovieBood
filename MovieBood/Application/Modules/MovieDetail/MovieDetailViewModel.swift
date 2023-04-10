@@ -45,6 +45,7 @@ extension MovieDetailView {
                     DispatchQueue.main.async {
                         self.movie = movie
                         self.fetchReviews(movieID: movieID)
+                        print(self.movie.videos?.results.first ?? "")
                     }
                 case .failure(let error):
                     print(error.localizedDescription)

@@ -33,6 +33,10 @@ struct MovieDetailView: View {
                 VStack(alignment: .leading ,spacing: 30) {
                     DetailInfoView(movie: viewModel.movie)
                     
+                    VideoView(youtubeURL: viewModel.movie.youtubeTrailers?.first?.youtubeURL!).frame(width: 300, height: 230, alignment: .center)
+                    .cornerRadius(12)
+                    .padding(.horizontal,24)
+                    .background(Color.red)
                     StrokeLine()
                     AvatarListView(section: "Directors",
                                    movies: viewModel.movie.directors)
@@ -47,6 +51,8 @@ struct MovieDetailView: View {
                     
                     //MARK: - Bottom Reviews
                     VStack(alignment: .leading) {
+                 
+                        
                         InfoView(infoType:"Ratings & Reviews" , size: 24)
                         
                         VStack(alignment: .trailing) {
@@ -104,6 +110,7 @@ struct AvatarListView: View {
     var section : String
     var movies: [MovieCrew]?
     
+    
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -115,17 +122,19 @@ struct AvatarListView: View {
             
             ScrollView(.horizontal,showsIndicators: false){
                 LazyHStack{
-                    ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
-                        NavigationLink {
-                            PersonDetailView(personID: movie.id)
-                        } label: {
-                            TabView {
-                                AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)
-                                    .shadow(color: .init(white: 0.5, opacity: 0.3), radius: 10)
-                            }.frame(height: 80)
-                            .tabViewStyle(.page)
+
+                        ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
+                            NavigationLink {
+                                PersonDetailView(personID: movie.id)
+                            } label: {
+                                TabView {
+                                    AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)
+                                        .shadow(color: .init(white: 0.5, opacity: 0.3), radius: 10)
+                                }.frame(height: 80)
+                                .tabViewStyle(.page)
+                            }
                         }
-                    }
+                        
                 }
 
             }

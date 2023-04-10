@@ -33,6 +33,8 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     var imgUrl: String {
         return AppConfig.imageURL + (posterPath ?? "")
     }
+    //MARK: - Youtube
+    
     var runtimeUI: String {
         let hour = String((runtime ?? 0) / 60)
         let mins = String((runtime ?? 0) % 60)
@@ -51,6 +53,10 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     
     var originalLanguageUI: String{
         return originalLanguage?.uppercased() ?? ""
+    }
+    
+    var videosUI: Bool{
+        return ((videos?.results.isEmpty) != nil)
     }
 
     
@@ -95,6 +101,8 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     var youtubeTrailers: [MovieVideo]? {
         videos?.results.filter { $0.youtubeURL != nil }
     }
+    
+    
     
     //MARK: - Mockdata
     
