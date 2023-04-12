@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MoveListView: View {
+struct MovieListView: View {
     
     @ObservedObject private var viewModel = MovieListViewModel()
     
@@ -48,7 +48,7 @@ struct MoveListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        MoveListView()
+        MovieListView()
     }
 }
 

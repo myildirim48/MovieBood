@@ -14,6 +14,7 @@ struct VideoView : UIViewRepresentable{
     
     func makeUIView(context: Context) -> WKWebView{
         return WKWebView()
+        
     }
     
     func updateUIView(_ uiView: WKWebView, context: Context) {
@@ -21,5 +22,7 @@ struct VideoView : UIViewRepresentable{
         
         uiView.scrollView.isScrollEnabled = false
         uiView.load(URLRequest(url: youtubeURL))
+        
+        
     }
 }

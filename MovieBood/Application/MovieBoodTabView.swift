@@ -10,7 +10,7 @@ import SwiftUI
 struct MovieBoodTabView: View {
     var body: some View {
         TabView {
-            MoveListView()
+            MovieListView()
                 .tabItem { Label("Home", systemImage: "film") }
                 .preferredColorScheme(.dark)
             SearchView()

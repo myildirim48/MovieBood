@@ -22,7 +22,7 @@ struct MoviesUIModel: Identifiable,Equatable{
 extension MoviesUIModel: MockableModel {
     
     static var mock: MoviesUIModel {
-        return MoviesUIModel(movieID: 123,fetchedDataType: .nowPlaying, posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg")
+        return MoviesUIModel(movieID: 677179,fetchedDataType: .nowPlaying, posterPath: "/9mnXOxmkZSQCHjprx47CnamBEOk.jpg")
     }
     
     static var mocModelArr: [MoviesUIModel] = [mock,mock]

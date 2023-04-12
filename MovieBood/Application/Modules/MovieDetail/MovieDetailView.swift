@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct MovieDetailView: View {
     
@@ -30,28 +31,35 @@ struct MovieDetailView: View {
                 }.padding(.bottom,-50)
                 
                 //MARK: -  Middle Info
-                VStack(alignment: .leading ,spacing: 30) {
+                VStack(alignment: .leading){
                     DetailInfoView(movie: viewModel.movie)
                     
-                    VideoView(youtubeURL: viewModel.movie.youtubeTrailers?.first?.youtubeURL!).frame(width: 300, height: 230, alignment: .center)
-                    .cornerRadius(12)
-                    .padding(.horizontal,24)
-                    .background(Color.red)
-                    StrokeLine()
-                    AvatarListView(section: "Directors",
-                                   movies: viewModel.movie.directors)
-                    AvatarListView(section: "Producer",
-                                   movies: viewModel.movie.producers)
-                    AvatarListView(section: "Editor",
-                                   movies: viewModel.movie.editor)
-                    AvatarListView(section: "Story",
-                                   movies: viewModel.movie.story)
-                    AvatarListView(section: "Cast", movies: viewModel.movie.convert(from: viewModel.movie.cast))
+                    VStack(alignment: .leading){
+                        StrokeLine()
+                        
+                        VideoView(youtubeURL: viewModel.movie.youtubeTrailers?.first?.youtubeURL!).frame(width: 320, height: 220)
+                            .cornerRadius(12)
+                            .padding(.horizontal, 35)
+                        
+                            .shadow(color: .init(white: 0.5,opacity: 0.4), radius: 10)
+                        
+                        StrokeLine()
+                        AvatarListView(section: "Directors",
+                                       movies: viewModel.movie.directors)
+                        AvatarListView(section: "Producer",
+                                       movies: viewModel.movie.producers)
+                        AvatarListView(section: "Editor",
+                                       movies: viewModel.movie.editor)
+                        AvatarListView(section: "Story",
+                                       movies: viewModel.movie.story)
+                        AvatarListView(section: "Cast", movies: viewModel.movie.convert(from: viewModel.movie.cast))
+                    }
+                    
                     StrokeLine()
                     
                     //MARK: - Bottom Reviews
-                    VStack(alignment: .leading) {
-                 
+                    VStack(alignment: .leading ){
+                        
                         
                         InfoView(infoType:"Ratings & Reviews" , size: 24)
                         
@@ -66,7 +74,7 @@ struct MovieDetailView: View {
                         ReviewCell(reviews: $viewModel.reviews, lastSeenReview: $viewModel.lastSeenReview)
                         
                     }.padding(.leading,5)
-                }.padding(.leading,45)
+                }.padding(.leading, 45)
             }
         }.onAppear{
             viewModel.fetchDetails(movieID: movieID)
@@ -122,21 +130,21 @@ struct AvatarListView: View {
             
             ScrollView(.horizontal,showsIndicators: false){
                 LazyHStack{
-
-                        ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
-                            NavigationLink {
-                                PersonDetailView(personID: movie.id)
-                            } label: {
-                                TabView {
-                                    AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)
-                                        .shadow(color: .init(white: 0.5, opacity: 0.3), radius: 10)
-                                }.frame(height: 80)
+                    
+                    ForEach(movies ?? [.init(id: 1, job: "asd", name: "asd", profilePath: "asd")]) { movie in
+                        NavigationLink {
+                            PersonDetailView(personID: movie.id)
+                        } label: {
+                            TabView {
+                                AvatarImageView(size: 56, name: movie.name, imgUrl: movie.profilePath)
+                                    .shadow(color: .init(white: 0.5, opacity: 0.3), radius: 10)
+                            }.frame(height: 80)
                                 .tabViewStyle(.page)
-                            }
                         }
-                        
+                    }
+                    
                 }
-
+                
             }
         }
     }
@@ -149,27 +157,50 @@ struct StrokeLine: View {
                 .foregroundColor(.lineStroke)
                 .frame( height: 1)
                 .padding(10)
+                .padding(.bottom,30)
+                .padding(.top,30)
         }
     }
 }
 
 struct DetailInfoView: View {
+    
+    @ObservedResults(FavoriteModel.self) var addFavorites
+    
     var movie: MovieDetailUIModel
     var body: some View {
         VStack(alignment: .leading){
             
-            Text(movie.title ?? "")
-                .foregroundColor(.white)
-                .font(.title)
-                .fontWeight(.bold)
-                .frame(width: 250,alignment: .leading)
+            VStack {
+                HStack {
+                    Text(movie.title ?? "")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .frame(width: 250,alignment: .leading)
+                    Spacer()
+                    Button {
+                        let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl)
+                        $addFavorites.append(newFavorite)
+                    } label: {
+                        Image(systemName: "heart.fill")
+                            .resizable()
+                            .scaledToFill()
+                            
+                    }
+                    .frame(width: 32, height: 32)
+                    .padding(.trailing,-10)
+                    .foregroundColor(.red)
+                    
+                }
+                
+                Text(movie.tagline ?? "")
+                    .foregroundColor(.white)
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .padding(.bottom,20)
+            }
             
-            Text(movie.tagline ?? "")
-                .foregroundColor(.white)
-                .font(.caption)
-                .fontWeight(.semibold)
-                .padding(.bottom,20)
-
             VStack(spacing: 50) {
                 HStack{
                     VStack(alignment: .leading,spacing: 30) {

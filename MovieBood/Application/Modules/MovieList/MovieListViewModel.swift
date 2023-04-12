@@ -10,7 +10,7 @@ import Resolver
 import Combine
 import SwiftUI
 
-extension MoveListView {
+extension MovieListView {
     
     @MainActor class MovieListViewModel: ObservableObject {
         
