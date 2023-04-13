@@ -15,11 +15,7 @@ class FavoriteModel: Object,ObjectKeyIdentifiable {
     @Persisted var watched: Bool = false
     @Persisted var posterPath: String
     @Persisted var status: StatusWatched = .onlist
-    
-//    var returnImgURL: String {
-//        return AppConfig.imageURL + (posterPath ?? "")
-//}
-    
+
     enum StatusWatched: Int,PersistableEnum{
     case watched, onlist, rememberMeLater
         

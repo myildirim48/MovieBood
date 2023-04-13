@@ -11,15 +11,16 @@ import SwiftUI
 import Combine
 
 extension MovieDetailView {
-
+    
     @MainActor class MovieDetailViewModel: ObservableObject {
         
         @Injected private var repository: MovieDetailRepositoryProtocol
         
         @Published public var movie: MovieDetailUIModel = MovieDetailUIModel.mock
         @Published public var reviews: [MovieReviewsUIModel] = []
-        
+
         @Published public var lastSeenReview: MovieReviewsUIModel?
+
        private var pagesOfReviews: Int = 1
 
         private var canellabes = Set<AnyCancellable>()
@@ -37,7 +38,6 @@ extension MovieDetailView {
 
         }
         
-        
         func fetchDetails(movieID:Int){
             repository.getMvoeiDetail(movieID: String(movieID)) { result in
                 switch result {
@@ -54,7 +54,6 @@ extension MovieDetailView {
         }
         
         func fetchReviews(movieID: Int){
-            
             repository.getReviews(movieID: String(movieID), page: String(pagesOfReviews)) { [weak self] result in
                 guard let self else { return }
                 switch result {
@@ -71,12 +70,8 @@ extension MovieDetailView {
             }
 
         }
-        
-        
         func hasNextpage() -> Bool {
              pagesOfReviews < repository.totalPagesofReviews ? true : false
         }
-
-        
 }
 }

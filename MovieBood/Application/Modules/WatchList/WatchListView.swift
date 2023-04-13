@@ -15,49 +15,30 @@ struct WatchListView: View {
     
     var body: some View {
         
-        
         NavigationView {
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(){
-                    ForEach(favorites) { favorite in
+            
+            
+            VStack {
+                List {
+                    ForEach(favorites) { fa in
                         NavigationLink {
-                            MovieDetailView(movieID: favorite.movieID)
+                            MovieDetailView(movieID: fa.movieID)
                         } label: {
+                                WatchListRow(watchList: fa)
+                        }
+                       
+                    }.onDelete(perform: $favorites.remove)
+                }
+                .listStyle(.plain)
+                .searchable(text: $searchFilter,
+                            collection: $favorites,
+                            keyPath: \.name) {
+                    ForEach(favorites) { favorite in
+                       HStack(spacing: 10) {
                             WatchListRow(watchList: favorite)
                         }
-                    }
-                    
-                    
-                    VStack{
-                        VStack {
-                            
-                            List {
-                                ForEach(favorites.sorted(by: [
-                                    SortDescriptor(keyPath: "watched"),
-                                    SortDescriptor(keyPath: "status", ascending: true)
-                                ])) { favorite in
-                                    NavigationLink {
-                                        MovieDetailView(movieID: favorite.movieID)
-                                    } label: {
-                                        WatchListRow(watchList: favorite)
-                                    }
-                                    
-                                }
-                                .onDelete(perform: $favorites.remove)
-                                .listRowSeparator(.hidden)
-                                
-                            }
-                            .listStyle(.plain)
-                            .searchable(text: $searchFilter,
-                                        collection: $favorites,
-                                        keyPath: \.name) {
-                                ForEach(favorites) { favorite in
-                                    Text(favorite.name)
-                                        .searchCompletion(favorite.name)
-                                }
-                            }
-                        }
-                        .animation(.default, value: favorites)
+                        .foregroundColor(.white)
+                            .searchCompletion(favorite.name)
                     }
                 }
             }

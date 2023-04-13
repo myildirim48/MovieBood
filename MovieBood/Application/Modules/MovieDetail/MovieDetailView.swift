@@ -12,7 +12,7 @@ struct MovieDetailView: View {
     
     let movieID: Int
     @ObservedObject private var viewModel = MovieDetailViewModel()
-    
+
     var body: some View {
         ScrollView {
             VStack{
@@ -32,7 +32,7 @@ struct MovieDetailView: View {
                 
                 //MARK: -  Middle Info
                 VStack(alignment: .leading){
-                    DetailInfoView(movie: viewModel.movie)
+                    DetailInfoView(watchList: ._rlmDefaultValue(), movie: viewModel.movie)
                     
                     VStack(alignment: .leading){
                         StrokeLine()
@@ -80,7 +80,9 @@ struct MovieDetailView: View {
             viewModel.fetchDetails(movieID: movieID)
         }
         .background(.black)
-        .navigationTitle(viewModel.movie.title ?? "")
+        //        .navigationTitle()
+        .navigationBarTitle(viewModel.movie.title ?? "", displayMode: .inline)
+        
     }
 }
 
@@ -166,12 +168,14 @@ struct StrokeLine: View {
 struct DetailInfoView: View {
     
     @ObservedResults(FavoriteModel.self) var addFavorites
-    
+    @ObservedRealmObject var watchList: FavoriteModel
     var movie: MovieDetailUIModel
+    
     var body: some View {
+                
         VStack(alignment: .leading){
             
-            VStack {
+            VStack(alignment: .leading) {
                 HStack {
                     Text(movie.title ?? "")
                         .foregroundColor(.white)
@@ -181,9 +185,11 @@ struct DetailInfoView: View {
                     Spacer()
                     Button {
                         let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl)
+                        
                         $addFavorites.append(newFavorite)
+                        
                     } label: {
-                        Image(systemName: "heart.fill")
+                        Image(systemName: "heart")
                             .resizable()
                             .scaledToFill()
                             

@@ -30,31 +30,30 @@ struct WatchListRow: View {
                     .padding(5)
                     .foregroundColor(Color(.systemBackground))
                     .background(RoundedRectangle(cornerRadius: 10).fill(watchList.status.color))
-                //                        .frame(width: 120, height: 50)
             }
         }
         Spacer()
-        Button {
-            //                $watchList.remove
-        } label: {
-            Image(systemName: "heart.fill")
-                .resizable()
-                .scaledToFill()
-            
-        }
-        .frame(width: 28, height: 32)
-        .padding(.trailing, 20)
-        .foregroundColor(.red)
+//        Button {
+//            $modelFav.remove
+//        } label: {
+//            Image(systemName: "heart.fill")
+//                .resizable()
+//                .scaledToFill()
+//
+//        }
+//        .frame(width: 28, height: 32)
+//        .padding(.trailing, 20)
+//        .foregroundColor(.red)
         
         
         
-        Button {
-            $watchList.watched.wrappedValue.toggle()
-        } label: {
-            Image(systemName: watchList.watched ? "checkmark.circle" : "circle")
-                .padding()
-            
-        }
+//        Button {
+//            $watchList.watched.wrappedValue.toggle()
+//        } label: {
+//            Image(systemName: watchList.watched ? "checkmark.circle" : "circle")
+//                .padding()
+//
+//        }
         
     }
 }
