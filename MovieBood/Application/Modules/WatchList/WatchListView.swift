@@ -14,10 +14,7 @@ struct WatchListView: View {
     @State private var searchFilter = ""
     
     var body: some View {
-        
         NavigationView {
-            
-            
             VStack {
                 List {
                     ForEach(favorites) { fa in
@@ -26,10 +23,10 @@ struct WatchListView: View {
                         } label: {
                                 WatchListRow(watchList: fa)
                         }
-                       
                     }.onDelete(perform: $favorites.remove)
                 }
                 .listStyle(.plain)
+                .listRowSeparator(.hidden)
                 .searchable(text: $searchFilter,
                             collection: $favorites,
                             keyPath: \.name) {

@@ -9,6 +9,7 @@ import Foundation
 import Resolver
 import SwiftUI
 import Combine
+import RealmSwift
 
 extension MovieDetailView {
     
@@ -18,13 +19,13 @@ extension MovieDetailView {
         
         @Published public var movie: MovieDetailUIModel = MovieDetailUIModel.mock
         @Published public var reviews: [MovieReviewsUIModel] = []
-
         @Published public var lastSeenReview: MovieReviewsUIModel?
-
-       private var pagesOfReviews: Int = 1
-
-        private var canellabes = Set<AnyCancellable>()
         
+        @Published public var hasRealm: Bool = false
+        
+        private var pagesOfReviews: Int = 1
+        private var canellabes = Set<AnyCancellable>()
+            
         init(){
             $lastSeenReview.sink { _ in
             } receiveValue: { [weak self] review in
@@ -35,7 +36,6 @@ extension MovieDetailView {
                     self.fetchReviews(movieID: self.movie.id)
                 }
             }.store(in: &canellabes)
-
         }
         
         func fetchDetails(movieID:Int){
@@ -45,7 +45,7 @@ extension MovieDetailView {
                     DispatchQueue.main.async {
                         self.movie = movie
                         self.fetchReviews(movieID: movieID)
-                        print(self.movie.videos?.results.first ?? "")
+                        self.checkRealm()
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -68,10 +68,21 @@ extension MovieDetailView {
                     print(failure.localizedDescription)
                 }
             }
-
+            
         }
+        
         func hasNextpage() -> Bool {
-             pagesOfReviews < repository.totalPagesofReviews ? true : false
+            pagesOfReviews < repository.totalPagesofReviews ? true : false
         }
-}
+        
+        //MARK: -  Realm
+       private func checkRealm() {
+            let realm = try! Realm()
+            if realm.object(ofType: FavoriteModel.self, forPrimaryKey: movie.id) != nil {
+                hasRealm = true
+            } else {
+                hasRealm = false
+            }
+        }
+    }
 }

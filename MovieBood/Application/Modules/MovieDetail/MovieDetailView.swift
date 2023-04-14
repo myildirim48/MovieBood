@@ -12,12 +12,11 @@ struct MovieDetailView: View {
     
     let movieID: Int
     @ObservedObject private var viewModel = MovieDetailViewModel()
-
+    
     var body: some View {
         ScrollView {
             VStack{
                 VStack{
-                    
                     //MARK: -  Top Poster
                     ZStack {
                         LoadableImage(url: URL(string: viewModel.movie.imgUrl), defaultImage: .movie)
@@ -27,22 +26,18 @@ struct MovieDetailView: View {
                     
                     LinearGradient(gradient: Gradient(colors: [.clear, .black,.black]), startPoint: .top, endPoint: .bottom)
                         .frame(height: 90)
-                    
                 }.padding(.bottom,-50)
                 
                 //MARK: -  Middle Info
                 VStack(alignment: .leading){
-                    DetailInfoView(watchList: ._rlmDefaultValue(), movie: viewModel.movie)
+                    DetailInfoView(movie: viewModel.movie, hasRealm: $viewModel.hasRealm)
                     
                     VStack(alignment: .leading){
                         StrokeLine()
-                        
                         VideoView(youtubeURL: viewModel.movie.youtubeTrailers?.first?.youtubeURL!).frame(width: 320, height: 220)
                             .cornerRadius(12)
                             .padding(.horizontal, 35)
-                        
                             .shadow(color: .init(white: 0.5,opacity: 0.4), radius: 10)
-                        
                         StrokeLine()
                         AvatarListView(section: "Directors",
                                        movies: viewModel.movie.directors)
@@ -54,15 +49,10 @@ struct MovieDetailView: View {
                                        movies: viewModel.movie.story)
                         AvatarListView(section: "Cast", movies: viewModel.movie.convert(from: viewModel.movie.cast))
                     }
-                    
                     StrokeLine()
-                    
                     //MARK: - Bottom Reviews
                     VStack(alignment: .leading ){
-                        
-                        
                         InfoView(infoType:"Ratings & Reviews" , size: 24)
-                        
                         VStack(alignment: .trailing) {
                             Text(viewModel.movie.voteAvarageUI)
                                 .foregroundColor(.lineStroke)
@@ -72,7 +62,6 @@ struct MovieDetailView: View {
                                 .font(.system(size: 15,weight: .bold))
                         }
                         ReviewCell(reviews: $viewModel.reviews, lastSeenReview: $viewModel.lastSeenReview)
-                        
                     }.padding(.leading,5)
                 }.padding(.leading, 45)
             }
@@ -80,9 +69,7 @@ struct MovieDetailView: View {
             viewModel.fetchDetails(movieID: movieID)
         }
         .background(.black)
-        //        .navigationTitle()
         .navigationBarTitle(viewModel.movie.title ?? "", displayMode: .inline)
-        
     }
 }
 
@@ -144,9 +131,7 @@ struct AvatarListView: View {
                                 .tabViewStyle(.page)
                         }
                     }
-                    
                 }
-                
             }
         }
     }
@@ -168,13 +153,11 @@ struct StrokeLine: View {
 struct DetailInfoView: View {
     
     @ObservedResults(FavoriteModel.self) var addFavorites
-    @ObservedRealmObject var watchList: FavoriteModel
     var movie: MovieDetailUIModel
+    @Binding var hasRealm : Bool
     
     var body: some View {
-                
         VStack(alignment: .leading){
-            
             VStack(alignment: .leading) {
                 HStack {
                     Text(movie.title ?? "")
@@ -184,29 +167,37 @@ struct DetailInfoView: View {
                         .frame(width: 250,alignment: .leading)
                     Spacer()
                     Button {
-                        let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl)
-                        
-                        $addFavorites.append(newFavorite)
-                        
+                        do {
+                            let realm = try! Realm()
+                            guard let objectToUpdate = realm.object(ofType: FavoriteModel.self, forPrimaryKey: movie.id) else {
+                                let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl)
+                                $addFavorites.append(newFavorite)
+                                hasRealm = true
+                                return
+                            }
+                            try realm.write {
+                                realm.delete(objectToUpdate)
+                                hasRealm = false
+                            }
+                        }
+                        catch {
+                            print(error)
+                        }
                     } label: {
-                        Image(systemName: "heart")
+                        Image(systemName: hasRealm ? "heart.fill" : "heart")
                             .resizable()
                             .scaledToFill()
-                            
                     }
                     .frame(width: 32, height: 32)
                     .padding(.trailing,-10)
                     .foregroundColor(.red)
-                    
                 }
-                
                 Text(movie.tagline ?? "")
                     .foregroundColor(.white)
                     .font(.caption)
                     .fontWeight(.semibold)
                     .padding(.bottom,20)
             }
-            
             VStack(spacing: 50) {
                 HStack{
                     VStack(alignment: .leading,spacing: 30) {

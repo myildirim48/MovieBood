@@ -9,10 +9,12 @@ import SwiftUI
 import RealmSwift
 
 class FavoriteModel: Object,ObjectKeyIdentifiable {
-    @Persisted(primaryKey: true) var id: ObjectId
+
+    //    @Persisted(primaryKey: true) var id: ObjectId
+    
     @Persisted var name: String
-    @Persisted var movieID: Int
-    @Persisted var watched: Bool = false
+    @Persisted(primaryKey: true) var movieID: Int
+    @Persisted var favorited: Bool = true
     @Persisted var posterPath: String
     @Persisted var status: StatusWatched = .onlist
 
@@ -49,6 +51,12 @@ class FavoriteModel: Object,ObjectKeyIdentifiable {
             return .watched
         }
     }
+    
+    func isOnRealm(movieID: Int) -> Bool {
+        guard (realm?.object(ofType: FavoriteModel.self, forPrimaryKey: movieID)) != nil else  { return false }
+        return true
+    }
+    
     convenience init(name: String, movieID: Int, posterPath: String?) {
         self.init()
         self.name = name

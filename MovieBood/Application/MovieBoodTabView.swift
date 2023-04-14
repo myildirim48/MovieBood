@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct MovieBoodTabView: View {
+    @ObservedResults(FavoriteModel.self) var favorites
     var body: some View {
         TabView {
             MovieListView()
@@ -19,7 +21,7 @@ struct MovieBoodTabView: View {
                 
             WatchListView()
                 .tabItem { Label("Watch List", systemImage: "list.bullet") }
-                .badge(5)
+                .badge(favorites.count)
         }
         .toolbarBackground(.black, for: .tabBar)
                 
