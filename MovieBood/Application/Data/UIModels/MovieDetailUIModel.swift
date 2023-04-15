@@ -17,7 +17,7 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     private let voteAverage: Double?
     let voteCount: Int?
     private let runtime: Int?
-    let releaseDate: String?
+    private let releaseDate: String?
     let tagline: String?
     private let originalLanguage: String?
     private let genres: [Genre]?
@@ -57,6 +57,11 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     
     var videosUI: Bool{
         return ((videos?.results.isEmpty) != nil)
+    }
+    
+    var releaseDateUI: String {
+        guard let date = releaseDate?.transformStringToDate().dateToString() else { return "n / a"}
+        return date
     }
 
     

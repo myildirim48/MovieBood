@@ -6,23 +6,18 @@
 //
 
 import SwiftUI
-import RealmSwift
-
 struct MovieBoodTabView: View {
-    @ObservedResults(FavoriteModel.self) var favorites
     var body: some View {
         TabView {
             MovieListView()
                 .tabItem { Label("Home", systemImage: "film") }
-                .preferredColorScheme(.dark)
-            SearchView()
-                .tabItem { Label("Search", systemImage: "magnifyingglass")
-                }
                 
+            SearchView()
+                .tabItem { Label("Search", systemImage: "magnifyingglass") }
             WatchListView()
                 .tabItem { Label("Watch List", systemImage: "list.bullet") }
-                .badge(favorites.count)
         }
+        .preferredColorScheme(.dark)
         .toolbarBackground(.black, for: .tabBar)
                 
     }

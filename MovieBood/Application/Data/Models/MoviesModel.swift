@@ -11,8 +11,6 @@ struct MoviesModel: Codable,Equatable {
     
     let id: Int
     let posterPath: String?
-
-// arning("Tell me master really do i need to use Equatable here
     
     static func == (lhs:MoviesModel, rhs: MoviesModel)-> Bool {
         return lhs.id == rhs.id

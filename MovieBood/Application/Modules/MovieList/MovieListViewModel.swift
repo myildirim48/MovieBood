@@ -19,7 +19,7 @@ extension MovieListView {
         @Published private(set) var nowPlayingMovies: [FetchedDataType:MoviesUIModel] = [:]
         @Published public var lastNowPlayingMovie: MoviesUIModel?
         @Published public var movies: [FetchedDataType: [MoviesUIModel]] = [:]
-        
+            
         private var currentPages: [FetchedDataType: Int ] = [:]
         
         private var cancellabes = Set<AnyCancellable>()
@@ -71,7 +71,6 @@ extension MovieListView {
                     
                 case .failure(let error):
                     print(error.localizedDescription)
-                    //TODO: - Show the error to user
                 }
             }
             

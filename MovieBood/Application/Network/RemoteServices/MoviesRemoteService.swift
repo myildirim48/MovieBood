@@ -12,10 +12,12 @@ protocol MoviesRemoteServiceProtocol {
                              endpoint: MoviesListEndPoints,
                              movieListType: FetchedDataType,
                           handler: @escaping (Result<MovieResponse<MoviesModel>, Error>) -> Void)
+    func searchMovies(page:Int,
+                      searchQuery: String,
+                      handler: @escaping(Result<MovieResponse<MovieSearchModel>, Error>) -> Void)
 }
 
- final class MoviesRemoteService: MoviesRemoteServiceProtocol,Requestable {
-    
+final class MoviesRemoteService: MoviesRemoteServiceProtocol,Requestable {
     typealias TargetEndPoint = MovieEndPoints
 
      func getMoviesFromRemote(page: Int,
@@ -28,5 +30,14 @@ protocol MoviesRemoteServiceProtocol {
         request(with: requestObject, completionHandler: handler)
     }
 
+    func searchMovies(page: Int,
+                      searchQuery: String,
+                      handler: @escaping (Result<MovieResponse<MovieSearchModel>, Error>) -> Void) {
+        
+        var requestObject = TargetEndPoint.search.commonRequestObject
+        requestObject.parameters["query"] = searchQuery
+        requestObject.parameters["page"] = String(page)
+        request(with: requestObject, completionHandler: handler)
+    }
 }
 

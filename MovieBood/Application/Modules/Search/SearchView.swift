@@ -8,19 +8,35 @@
 import SwiftUI
 
 struct SearchView: View {
+    @ObservedObject private var viewModel = SearchViewModel()
+    @State private var searchTerm = ""
+    
     var body: some View {
-
-        VStack {
-            Text("SearchView")
-                .foregroundColor(.white)
+        
+        NavigationView {
+                List(viewModel.searchResult) { result in
+                    NavigationLink(destination: MovieDetailView(movieID: result.id)){
+                        MovieListRow(name: result.titleUI, url: result.imgUrl, releaseData: result.dateUI)
+                    }
+                }
+            .listStyle(.plain)
+            .listRowSeparator(.hidden)
+            .searchable(text: $searchTerm,
+                                    prompt: "Enter keyword to search",
+                                    suggestions: {
+                            Text("Avatar").searchCompletion("avatar")
+                        })
+            .onChange(of: searchTerm) { newValue in
+                if newValue != " " {
+                    viewModel.searchMovies(searchQuery: newValue)
+                }
+            }
+            .navigationTitle("Search")
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.black)
     }
-}
-
-struct SearchView_Previews: PreviewProvider {
-    static var previews: some View {
-        SearchView()
+    struct SearchView_Previews: PreviewProvider {
+        static var previews: some View {
+            SearchView()
+        }
     }
 }

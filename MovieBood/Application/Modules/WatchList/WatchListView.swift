@@ -15,32 +15,40 @@ struct WatchListView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                List {
-                    ForEach(favorites) { fa in
-                        NavigationLink {
-                            MovieDetailView(movieID: fa.movieID)
-                        } label: {
-                                WatchListRow(watchList: fa)
+            
+            if favorites.count > 0 {
+                VStack {
+                    List {
+                        ForEach(favorites) { favorite in
+                            NavigationLink {
+                                MovieDetailView(movieID: favorite.movieID)
+                            } label: {
+                                MovieListRow(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
+
+                            }
+                        }.onDelete(perform: $favorites.remove)
+                    }
+                    .listStyle(.plain)
+                    .listRowSeparator(.hidden)
+                    .searchable(text: $searchFilter,
+                                collection: $favorites,
+                                keyPath: \.name) {
+                        ForEach(favorites) { favorite in
+                           HStack(spacing: 10) {
+                               MovieListRow(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
+                            }
+                            .foregroundColor(.white)
+                                .searchCompletion(favorite.name)
                         }
-                    }.onDelete(perform: $favorites.remove)
-                }
-                .listStyle(.plain)
-                .listRowSeparator(.hidden)
-                .searchable(text: $searchFilter,
-                            collection: $favorites,
-                            keyPath: \.name) {
-                    ForEach(favorites) { favorite in
-                       HStack(spacing: 10) {
-                            WatchListRow(watchList: favorite)
-                        }
-                        .foregroundColor(.white)
-                            .searchCompletion(favorite.name)
                     }
                 }
+                .navigationTitle("Watch List")
+            }else {
+                EmptyState()
             }
-            .navigationTitle("Watch List")
+
         }
+        .badge(favorites.count)
         .onAppear(perform: {
             print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
                         UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")

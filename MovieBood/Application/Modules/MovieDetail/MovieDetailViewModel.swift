@@ -22,6 +22,8 @@ extension MovieDetailView {
         @Published public var lastSeenReview: MovieReviewsUIModel?
         
         @Published public var hasRealm: Bool = false
+//        @ObservedResults(FavoriteModel.self) var addFavorites
+
         
         private var pagesOfReviews: Int = 1
         private var canellabes = Set<AnyCancellable>()
@@ -84,5 +86,24 @@ extension MovieDetailView {
                 hasRealm = false
             }
         }
+        
+//        func addMovieToFavorites(title: String?, id:Int, imgUrl: String) {
+//            do {
+//                let realm = try! Realm()
+//                guard let objectToUpdate = realm.object(ofType: FavoriteModel.self, forPrimaryKey: movie.id) else {
+//                    let newFavorite = FavoriteModel(name: title ?? "", movieID: id, posterPath: imgUrl)
+//                    $addFavorites.append(newFavorite)
+//                    hasRealm = true
+//                    return
+//                }
+//                try realm.write {
+//                    realm.delete(objectToUpdate)
+//                    hasRealm = false
+//                }
+//            }
+//            catch {
+//                print(error)
+//            }
+//        }
     }
 }

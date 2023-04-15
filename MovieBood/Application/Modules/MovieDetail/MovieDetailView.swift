@@ -170,7 +170,7 @@ struct DetailInfoView: View {
                         do {
                             let realm = try! Realm()
                             guard let objectToUpdate = realm.object(ofType: FavoriteModel.self, forPrimaryKey: movie.id) else {
-                                let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl)
+                                let newFavorite = FavoriteModel(name: movie.title ?? "", movieID: movie.id, posterPath: movie.imgUrl, releaseDate: movie.releaseDateUI)
                                 $addFavorites.append(newFavorite)
                                 hasRealm = true
                                 return

@@ -16,8 +16,6 @@ struct ReviewCell: View {
         ScrollView(.horizontal,showsIndicators: false) {
             LazyHStack(spacing: 12) {
                 ForEach(reviews) { review in
-
-            
             ZStack (alignment: .leading) {
                 NameBackgroundView()
                 VStack{
