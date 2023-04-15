@@ -13,7 +13,7 @@ extension PersonDetailView {
         
         @Injected private var repository: MovieDetailRepositoryProtocol
         
-        @Published public var person: PersonUIModel = PersonUIModel.mock
+        @Published public var person: PersonUIModel = .mock
         
         func fetchPerson(personID: Int){
             repository.getPerson(personID: String(personID)) { result in

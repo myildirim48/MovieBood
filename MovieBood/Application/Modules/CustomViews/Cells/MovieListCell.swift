@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MovieListRow: View {
+struct MovieListCell: View {
     var name: String
     var url: String
     var releaseData: String
@@ -34,6 +34,6 @@ struct MovieListRow: View {
 
 struct WatchListRow_Previews: PreviewProvider {
     static var previews: some View {
-        MovieListRow(name: "Movie Name", url: "", releaseData: "30.03.2022")
+        MovieListCell(name: "Movie Name", url: "", releaseData: "30.03.2022")
     }
 }

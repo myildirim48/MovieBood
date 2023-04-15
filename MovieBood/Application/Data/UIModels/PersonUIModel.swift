@@ -30,6 +30,7 @@ struct PersonUIModel: Equatable,MockableModel {
     
     var ptofileImageUI: URL {
         URL(string: AppConfig.imageURL + (profilePath ?? "n / a"))!
+        
     }
     
     static func convert(from response: PersonModel) -> PersonUIModel {

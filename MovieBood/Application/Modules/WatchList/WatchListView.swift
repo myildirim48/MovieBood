@@ -23,7 +23,7 @@ struct WatchListView: View {
                             NavigationLink {
                                 MovieDetailView(movieID: favorite.movieID)
                             } label: {
-                                MovieListRow(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
+                                MovieListCell(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
 
                             }
                         }.onDelete(perform: $favorites.remove)
@@ -35,7 +35,7 @@ struct WatchListView: View {
                                 keyPath: \.name) {
                         ForEach(favorites) { favorite in
                            HStack(spacing: 10) {
-                               MovieListRow(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
+                               MovieListCell(name: favorite.name, url: favorite.posterPath, releaseData: favorite.releaseDate)
                             }
                             .foregroundColor(.white)
                                 .searchCompletion(favorite.name)
