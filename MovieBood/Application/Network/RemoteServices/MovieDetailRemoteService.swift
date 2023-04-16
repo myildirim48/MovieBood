@@ -18,6 +18,9 @@ protocol MovieDetailRemoteServiceProtocol {
     func fetchPerson(personID: String,
                      handler: @escaping(Result<PersonModel, Error>) -> Void)
     
+    func personMovieCredits(personID: String,
+                             handler: @escaping(Result<PersonMovieCredits, Error>) -> Void)
+    
 }
 
 final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol,Requestable {
@@ -42,11 +45,17 @@ final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol,Requesta
         
     }
     
+    //MARK: -  Person
     func fetchPerson(personID: String,
                      handler: @escaping (Result<PersonModel, Error>) -> Void) {
         let requestObject = TargetEndPoint.person(id: personID).commonRequestObject
         request(with: requestObject, completionHandler: handler)
     }
     
+    func personMovieCredits(personID: String,
+                            handler: @escaping(Result<PersonMovieCredits, Error>) -> Void) {
+        let requestObject = TargetEndPoint.personMovieCredits(id: personID).commonRequestObject
+        request(with: requestObject, completionHandler: handler)
+    }
     
 }

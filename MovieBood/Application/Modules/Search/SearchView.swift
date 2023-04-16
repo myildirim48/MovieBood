@@ -55,7 +55,7 @@ struct SearchContent: View {
             .listRowSeparator(.hidden)
                 
             }else {
-                Text("Search for the movies. \n \n Avatar, God Father etc..")
+                Text("Search for the movies. \n \n Avatar, Godfather etc..")
                     .font(.system(size: 14,weight: .light))
                     .padding(.bottom,350)
             }

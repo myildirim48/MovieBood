@@ -14,6 +14,7 @@ extension PersonDetailView {
         @Injected private var repository: MovieDetailRepositoryProtocol
         
         @Published public var person: PersonUIModel = .mock
+        @Published public var credits: PersonMovieCreditsUIModel = .mock
         
         func fetchPerson(personID: Int){
             repository.getPerson(personID: String(personID)) { result in
@@ -21,6 +22,19 @@ extension PersonDetailView {
                 case .success(let success):
                     DispatchQueue.main.async {
                         self.person = success
+                    }
+                case .failure(let failure):
+                    print(failure.localizedDescription)
+                }
+            }
+        }
+        
+        func getCredits(personID: Int) {
+            repository.getPersonCredits(personID: String(personID)) { result in
+                switch result {
+                case .success(let success):
+                    DispatchQueue.main.async {
+                        self.credits = success
                     }
                 case .failure(let failure):
                     print(failure.localizedDescription)

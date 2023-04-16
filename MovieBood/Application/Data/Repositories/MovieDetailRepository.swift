@@ -21,6 +21,9 @@ protocol MovieDetailRepositoryProtocol{
     
     func getPerson(personID: String,
                    handler: @escaping(Result<PersonUIModel, Error>) -> Void)
+    
+    func getPersonCredits(personID: String,
+                   handler: @escaping(Result<PersonMovieCreditsUIModel, Error>) -> Void)
 }
 
 final class MovieDetailRepository: MovieDetailRepositoryProtocol{
@@ -57,6 +60,8 @@ final class MovieDetailRepository: MovieDetailRepositoryProtocol{
             }
         }
     }
+    //MARK: -  Person
+    
     
     func getPerson(personID: String, handler: @escaping (Result<PersonUIModel, Error>) -> Void) {
         service.fetchPerson(personID: personID) { result in
@@ -65,6 +70,22 @@ final class MovieDetailRepository: MovieDetailRepositoryProtocol{
                 DispatchQueue.main.async {
                     let uiPerson = PersonUIModel.convert(from: success)
                     handler(.success(uiPerson))
+                }
+            case .failure(let failure):
+                handler(.failure(failure))
+            }
+        }
+    }
+    
+    
+    func getPersonCredits(personID: String,
+                          handler: @escaping(Result<PersonMovieCreditsUIModel, Error>) -> Void){
+        service.personMovieCredits(personID: personID) { result in
+            switch result {
+            case .success(let success):
+                DispatchQueue.main.async {
+                    let uiCredits = PersonMovieCreditsUIModel.convert(from: success)
+                    handler(.success(uiCredits))
                 }
             case .failure(let failure):
                 handler(.failure(failure))
