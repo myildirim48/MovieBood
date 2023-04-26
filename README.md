@@ -13,7 +13,7 @@ The app's architecture is MVVM + Repository Pattern. Let's see in a simple usage
                         -> BaseService
                         
 - **ViewModel**: Receives user actions from View and handles it. ViewModel holds the View's state. Interacts with repositories. 
-- **Repository**: Gets data from RemoteService and converts it to UIModel then sends it to the ViewModel. It could also get data from local storage as well. In that case, related LocalServices (i.e. ProductSearchLocalService) must be added into this class. 
+- **Repository**: Gets data from RemoteService and converts it to UIModel then sends it to the ViewModel. 
 - **RemoteService**: Gets data from remote and propagates it back to it's requester.
 
 
