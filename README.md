@@ -40,4 +40,4 @@ Structure of **Application** folder:
 |**Resolver**| Dependency Injection / Service Locator framework|
 
 ## Gif 
- ![](https://github.com/myildirim48/GamesLatte/blob/main/GamesLatte.gif?raw=true)
+ ![](https://github.com/myildirim48/MovieBood/blob/main/MovieBood.gif)
