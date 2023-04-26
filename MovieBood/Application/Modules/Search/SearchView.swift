@@ -19,7 +19,7 @@ struct SearchView: View {
                         .navigationTitle("Search")
 
         }     .onChange(of: searchTerm) { newValue in
-            if newValue != " " {
+            if newValue != "" {
                 viewModel.searchMovies(searchQuery: newValue)
             }
         }

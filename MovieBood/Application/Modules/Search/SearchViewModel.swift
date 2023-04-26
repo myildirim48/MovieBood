@@ -13,19 +13,14 @@ extension SearchView {
         @Injected private var repository: MoviesRepositoryProtocol
         
         @Published public var searchResult: [MovieSearchUIModel] = []
-        private var currentPage = 1
         
         func searchMovies(searchQuery: String) {
-            
-            if self.currentPage <= repository.searchTotalPage {
-                currentPage += 1
-            }
-            
-            repository.searchMovies(page: currentPage, searchQuery: searchQuery) { result in
+                        
+            repository.searchMovies(page: 1, searchQuery: searchQuery) { result in
                 switch result {
                 case .success(let success):
                     DispatchQueue.main.async {
-                        self.searchResult.append(contentsOf: success)
+                            self.searchResult = success
                     }
                 case .failure(let failure):
                     print(failure.localizedDescription)
