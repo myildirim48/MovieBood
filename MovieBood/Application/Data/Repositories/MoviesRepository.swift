@@ -15,12 +15,10 @@ protocol MoviesRepositoryProtocol {
     
     func getMovies(page:Int,
                    endpoint: MoviesListEndPoints,
-                   movieListType: FetchedDataType,
-                     handler: @escaping (Result<[MoviesUIModel],Error>) -> Void)
+                   movieListType: FetchedDataType) async throws -> [MoviesUIModel]
     
     func searchMovies(page:Int,
-                      searchQuery: String,
-                      handler: @escaping(Result<[MovieSearchUIModel], Error>) -> Void)
+                      searchQuery: String) async throws -> [MovieSearchUIModel]
 }
 
 final class MoviesRepository: MoviesRepositoryProtocol {
@@ -31,37 +29,18 @@ final class MoviesRepository: MoviesRepositoryProtocol {
     
     func getMovies(page:Int,
                    endpoint: MoviesListEndPoints,
-                   movieListType: FetchedDataType,
-                     handler: @escaping (Result<[MoviesUIModel], Error>) -> Void) {
-        service.getMoviesFromRemote(page: page, endpoint: endpoint, movieListType: movieListType) { result in
-            switch result{
-            case .success(let response):
-                DispatchQueue.main.async {
-                    let uiModel = MoviesUIModel.convert(from: response.results, dataType: movieListType)
-                    self.totalPages[movieListType] = response.totalPages
-                    handler(.success(uiModel))
-                }
-
-            case .failure(let error):
-                handler(.failure(error))
-            }
-        }
+                   movieListType: FetchedDataType) async throws -> [MoviesUIModel] {
+        let response = try await service.getMoviesFromRemote(page: page, endpoint: endpoint, movieListType: movieListType)
+        let uiModel = MoviesUIModel.convert(from: response.results, dataType: movieListType)
+        self.totalPages[movieListType] = response.totalPages
+        return uiModel
     }
     
     func searchMovies(page:Int,
-                      searchQuery: String,
-                      handler: @escaping(Result<[MovieSearchUIModel], Error>) -> Void){
-        service.searchMovies(page: page, searchQuery: searchQuery) { result in
-            switch result {
-            case .success(let success):
-                DispatchQueue.main.async {
-                    let model = MovieSearchUIModel.convert(from: success.results)
-                    self.searchTotalPage = success.totalPages ?? 0
-                    handler(.success(model))
-                }
-            case .failure(let failure):
-                handler(.failure(failure))
-            }
-        }
+                      searchQuery: String) async throws -> [MovieSearchUIModel] {
+        let response = try await service.searchMovies(page: page, searchQuery: searchQuery)
+        let uiModel = MovieSearchUIModel.convert(from: response.results)
+        self.searchTotalPage = response.totalPages ?? 0
+        return uiModel
     }
 }

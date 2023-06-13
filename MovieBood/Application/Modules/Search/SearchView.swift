@@ -14,17 +14,17 @@ struct SearchView: View {
     var body: some View {
         
         NavigationView {
-
+            
             SearchContent(queryString: searchTerm, searchResult: viewModel.searchResult)
-                        .navigationTitle("Search")
-
+                .navigationTitle("Search")
+            
         }     .onChange(of: searchTerm) { newValue in
-            if newValue != "" {
-                viewModel.searchMovies(searchQuery: newValue)
+            Task {
+                await viewModel.searchMovies(searchQuery: newValue)
             }
         }
-                    .searchable(text: $searchTerm,
-                                            prompt: "Enter keyword to search")
+        .searchable(text: $searchTerm,
+                    prompt: "Enter keyword to search")
     }
     struct SearchView_Previews: PreviewProvider {
         static var previews: some View {
@@ -51,17 +51,17 @@ struct SearchContent: View {
                         MovieListCell(name: result.titleUI, url: result.imgUrl, releaseData: result.dateUI)
                     }
                 }
-            .listStyle(.plain)
-            .listRowSeparator(.hidden)
+                .listStyle(.plain)
+                .listRowSeparator(.hidden)
                 
             }else {
                 Text("Search for the movies. \n \n Avatar, Godfather etc..")
                     .font(.system(size: 14,weight: .light))
                     .padding(.bottom,350)
             }
-
             
-
+            
+            
         }
     }
 }

@@ -65,8 +65,8 @@ struct MovieDetailView: View {
                     }.padding(.leading,5)
                 }.padding(.leading, 45)
             }
-        }.onAppear{
-            viewModel.fetchDetails(movieID: movieID)
+        }.task {
+            await viewModel.fetchDetails(movieID: movieID)
         }
         .background(.black)
         .navigationBarTitle(viewModel.movie.title ?? "", displayMode: .inline)

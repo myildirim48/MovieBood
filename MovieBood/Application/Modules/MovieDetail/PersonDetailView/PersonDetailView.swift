@@ -70,9 +70,9 @@ struct PersonDetailView: View {
                 
         }
         }
-        .onAppear{
-            viewModel.fetchPerson(personID: personID)
-            viewModel.getCredits(personID: personID)
+        .task {
+            await viewModel.fetchPerson(personID: personID)
+            await viewModel.getCredits(personID: personID)
         }
         .background(.black)
         .navigationTitle(viewModel.person.name ?? "Name")

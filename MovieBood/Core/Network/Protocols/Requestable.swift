@@ -12,15 +12,13 @@ protocol Requestable {
     associatedtype TargetEndPoint: TargetEndpointProtocol
  
     func request<T: Decodable>(baseService: BaseServiceProtocol,
-                              with object: RequestObject,
-                              completionHandler: @escaping (Result<T, Error>) -> Void )
+                              with object: RequestObject) async throws -> T
 }
 
 extension Requestable {
     
     func request<T: Decodable> (baseService: BaseServiceProtocol = Resolver.resolve(),
-                                with object: RequestObject,
-                                completionHandler: @escaping (Result<T, Error>) -> Void ) {
-        baseService.request(with: object, handler: completionHandler)
+                                with object: RequestObject) async throws -> T {
+        try await baseService.request(with: object)
     }
 }

@@ -8,54 +8,49 @@
 import Foundation
 protocol MovieDetailRemoteServiceProtocol {
     
-    func getMovieDetail(movieID: String,
-                             handler: @escaping (Result<MovieDetailModel, Error>) -> Void)
+    func getMovieDetail(movieID: String) async throws -> MovieDetailModel
     
     func fetchReviews(movieID:String,
-                    page: String,
-                    handler: @escaping(Result<MovieResponse<MovieReviewsModel>,Error>) -> Void)
+                      page: String) async throws -> MovieResponse<MovieReviewsModel>
     
-    func fetchPerson(personID: String,
-                     handler: @escaping(Result<PersonModel, Error>) -> Void)
+    func fetchPerson(personID: String) async throws -> PersonModel
     
-    func personMovieCredits(personID: String,
-                             handler: @escaping(Result<PersonMovieCredits, Error>) -> Void)
-    
+    func personMovieCredits(personID: String) async throws -> PersonMovieCredits
 }
 
-final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol,Requestable {
-
+final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol, Requestable {
+    
     typealias TargetEndPoint = MovieEndPoints
     
-    func getMovieDetail(movieID: String,
-                             handler: @escaping (Result<MovieDetailModel, Error>) -> Void){
+    func getMovieDetail(movieID: String) async throws -> MovieDetailModel {
         
         var requestObject = TargetEndPoint.detail(id: movieID).commonRequestObject
         requestObject.parameters["append_to_response"] = "videos,credits" //URL params
-        request(with: requestObject, completionHandler: handler)
+        let response: MovieDetailModel = try await request(with: requestObject)
+        return response
     }
     
     func fetchReviews(movieID: String,
-                    page: String,
-                    handler: @escaping (Result<MovieResponse<MovieReviewsModel>, Error>) -> Void) {
-            
+                      page: String) async throws -> MovieResponse<MovieReviewsModel> {
+        
         var requestObject = TargetEndPoint.review(id: movieID).commonRequestObject
         requestObject.parameters["page"] = page
-        request(with: requestObject, completionHandler: handler)
-        
+        let response: MovieResponse<MovieReviewsModel> = try await request(with: requestObject)
+        return response
     }
     
     //MARK: -  Person
-    func fetchPerson(personID: String,
-                     handler: @escaping (Result<PersonModel, Error>) -> Void) {
+
+    func fetchPerson(personID: String) async throws -> PersonModel {
         let requestObject = TargetEndPoint.person(id: personID).commonRequestObject
-        request(with: requestObject, completionHandler: handler)
+        let response: PersonModel = try await request(with: requestObject)
+        return response
     }
     
-    func personMovieCredits(personID: String,
-                            handler: @escaping(Result<PersonMovieCredits, Error>) -> Void) {
+    func personMovieCredits(personID: String) async throws -> PersonMovieCredits {
         let requestObject = TargetEndPoint.personMovieCredits(id: personID).commonRequestObject
-        request(with: requestObject, completionHandler: handler)
+        let response: PersonMovieCredits = try await request(with: requestObject)
+        return response
     }
     
 }

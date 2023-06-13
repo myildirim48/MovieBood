@@ -14,19 +14,18 @@ extension SearchView {
         
         @Published public var searchResult: [MovieSearchUIModel] = []
         
-        func searchMovies(searchQuery: String) {
-                        
-            repository.searchMovies(page: 1, searchQuery: searchQuery) { result in
-                switch result {
-                case .success(let success):
-                    DispatchQueue.main.async {
-                            self.searchResult = success
-                    }
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                    //TODO: - Show the error to user
-
-                }
+        func searchMovies(searchQuery: String) async {
+            
+            guard !searchQuery.isEmpty else {
+                self.searchResult = []
+                return
+            }
+            
+            do {
+                let response = try await repository.searchMovies(page: 1, searchQuery: searchQuery)
+                searchResult = response
+            } catch {
+                return
             }
         }
     }

@@ -22,7 +22,6 @@ extension MovieDetailView {
         @Published public var lastSeenReview: MovieReviewsUIModel?
         
         @Published public var hasRealm: Bool = false
-//        @ObservedResults(FavoriteModel.self) var addFavorites
 
         
         private var pagesOfReviews: Int = 1
@@ -35,40 +34,32 @@ extension MovieDetailView {
                 guard let review else { return }
                 if review == self.reviews.last && self.hasNextpage() {
                     self.pagesOfReviews += 1
-                    self.fetchReviews(movieID: self.movie.id)
+                    Task { await self.fetchReviews(movieID: self.movie.id) }
                 }
             }.store(in: &canellabes)
         }
         
-        func fetchDetails(movieID:Int){
-            repository.getMvoeiDetail(movieID: String(movieID)) { result in
-                switch result {
-                case .success(let movie):
-                    DispatchQueue.main.async {
-                        self.movie = movie
-                        self.fetchReviews(movieID: movieID)
-                        self.checkRealm()
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+        func fetchDetails(movieID:Int) async {
+            do {
+                let response = try await repository.getMvoeiDetail(movieID: String(movieID))
+                movie = response
+                await fetchReviews(movieID: movieID)
+                checkRealm()
+            } catch {
+                //TODO: - SHOW alert to user
             }
         }
         
-        func fetchReviews(movieID: Int){
-            repository.getReviews(movieID: String(movieID), page: String(pagesOfReviews)) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let success):
-                    DispatchQueue.main.async {
-                        self.reviews = success.sorted(by: { $0.createdAt ?? "" > $1.createdAt ?? ""})
-                    }
-                    if self.hasNextpage() {
-                        self.pagesOfReviews += 1
-                    }
-                case .failure(let failure):
-                    print(failure.localizedDescription)
+        func fetchReviews(movieID: Int) async {
+            
+            do {
+                let response = try await repository.getReviews(movieID: String(movieID), page: String(pagesOfReviews))
+                reviews = response.sorted(by: { $0.createdAt ?? "" > $1.createdAt ?? "" })
+                if hasNextpage() {
+                    pagesOfReviews += 1
                 }
+            } catch {
+                //TODO: - SHOW alert to user
             }
             
         }

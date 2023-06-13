@@ -6,7 +6,7 @@
 //
 
 import Foundation
-enum HTTPMethod: String, CustomStringConvertible{
+enum HTTPMethod: String, CustomStringConvertible {
     case get
     case post
     case put

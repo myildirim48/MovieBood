@@ -11,7 +11,6 @@ extension String{
     func transformStringToDate() -> Date {
         let dateFormatter = ISO8601DateFormatter()
         dateFormatter.formatOptions = [.withFullDate]
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         guard let date = dateFormatter.date(from: self) else { return Date.now}
         dateFormatter.string(from: date)
         return date

@@ -15,30 +15,26 @@ extension PersonDetailView {
         
         @Published public var person: PersonUIModel = .mock
         @Published public var credits: PersonMovieCreditsUIModel = .mock
+        //        @Published var showError = false
+        //        @Published var errorMessage: String?
         
-        func fetchPerson(personID: Int){
-            repository.getPerson(personID: String(personID)) { result in
-                switch result {
-                case .success(let success):
-                    DispatchQueue.main.async {
-                        self.person = success
-                    }
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                }
+        func fetchPerson(personID: Int) async {
+            do {
+                let response = try await repository.getPerson(personID: String(personID))
+                self.person = response
+            } catch {
+                //                showError = true
+                //                errorMessage = error.localizedDescription + "\nPlease contact the developer and provide this error and the steps to reproduce."
             }
         }
         
-        func getCredits(personID: Int) {
-            repository.getPersonCredits(personID: String(personID)) { result in
-                switch result {
-                case .success(let success):
-                    DispatchQueue.main.async {
-                        self.credits = success
-                    }
-                case .failure(let failure):
-                    print(failure.localizedDescription)
-                }
+        func getCredits(personID: Int) async {
+            do {
+                let response = try await repository.getPersonCredits(personID: String(personID))
+                self.credits = response
+            } catch {
+                //                showError = true
+                //                errorMessage = error.localizedDescription + "\nPlease contact the developer and provide this error and the steps to reproduce."
             }
         }
     }

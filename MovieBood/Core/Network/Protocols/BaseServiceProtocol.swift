@@ -11,16 +11,14 @@ import Resolver
 protocol BaseServiceProtocol {
     
     func request<T: Decodable> (with requestObject: RequestObject,
-                              decoder: JSONDecoder,
-                              handler: @escaping (Result<T, Error>) -> Void)
+                              decoder: JSONDecoder) async throws -> T
 }
 
 extension BaseServiceProtocol {
     
     func request<T: Decodable> (with requestObject: RequestObject,
-                              decoder: JSONDecoder = Resolver.resolve(),
-                              handler: @escaping (Result<T, Error>) -> Void) {
-        request(with: requestObject, decoder: decoder, handler: handler)
+                              decoder: JSONDecoder = Resolver.resolve()) async throws -> T {
+        try await request(with: requestObject, decoder: decoder)
     }
     
 }

@@ -28,23 +28,31 @@ extension MovieListView {
             } receiveValue: { movie in
                 guard let movie else { return }
                 if movie == self.nowPlayingMovies[movie.fetchedDataType!] {
+//                    Task {
+//                        await self.fetchMovies()
+//                    }
                     self.fetchMovies()
                 }
             }.store(in: &cancellabes)
         }
         
-        func fetchMovies(){
+        func fetchMovies() {
             guard let movieType = lastNowPlayingMovie?.fetchedDataType else {
+//                await MoviesListEndPoints.allCases.asyncForEach({ type in
+//                    await fetchMovies(endpoint: type, movieListType: type.dataType)
+//
+//                })
                 MoviesListEndPoints.allCases.forEach { type in
-                    fetchMovies(endpoint: type, movieListType: type.dataType)
+                    Task {
+                        await fetchMovies(endpoint: type, movieListType: type.dataType)
+                    }
                 }
                 return
             }
-            
-            fetchMovies(endpoint: .init(rawValue: movieType.rawValue)!, movieListType: movieType)
+            Task { await fetchMovies(endpoint: .init(rawValue: movieType.rawValue)!, movieListType: movieType)}
         }
         
-        func fetchMovies(endpoint: MoviesListEndPoints, movieListType: FetchedDataType) {
+        func fetchMovies(endpoint: MoviesListEndPoints, movieListType: FetchedDataType) async {
             
             if let totalPages = repository.totalPages[endpoint.dataType]{
                 if self.currentPages[endpoint.dataType] ?? 1 <= totalPages {
@@ -53,27 +61,18 @@ extension MovieListView {
             }
             
             let page = self.currentPages[endpoint.dataType] ?? 1
-
-            repository.getMovies(page: page, endpoint: endpoint, movieListType: endpoint.dataType) { result in
-                switch result {
-                case .success(let model):
-                    
-                    DispatchQueue.main.async {
-                        if self.movies[movieListType] == nil {
-                            self.movies[movieListType] = self.movies[movieListType] ?? [] + model
-                        }else {
-                            self.movies[movieListType]?.append(contentsOf: model)
-                        }
-                        print(movieListType.title ,"Current Page: ", page ," \n Total Data : " ,self.movies[movieListType]!.count)
-
-                        self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
-                    }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
+           
+            do {
+                let response = try await repository.getMovies(page: page, endpoint: endpoint, movieListType: endpoint.dataType)
+                if self.movies[movieListType] == nil {
+                    self.movies[movieListType] = self.movies[movieListType] ?? [] + response
+                }else {
+                    self.movies[movieListType]?.append(contentsOf: response)
                 }
+                self.nowPlayingMovies[movieListType] = self.movies[movieListType]?.last
+            } catch {
+                //TODO: - Show alert to user
             }
-            
         }
     }
 }

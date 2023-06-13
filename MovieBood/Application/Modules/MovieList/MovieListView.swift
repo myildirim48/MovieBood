@@ -26,9 +26,9 @@ struct MovieListView: View {
                                      movies: $viewModel.movies[.upComing],
                                      lastSeenMovie: $viewModel.lastNowPlayingMovie)
                 }
-                .onAppear {
-                    viewModel.fetchMovies()
-                }
+                .onAppear(perform: {
+                   viewModel.fetchMovies()
+                })
             }
             .padding(.bottom, 30)
             .padding(.top, 10)
