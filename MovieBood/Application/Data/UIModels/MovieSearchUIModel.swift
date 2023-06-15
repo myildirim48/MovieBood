@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct MovieSearchUIModel: Codable,MockableModel,Identifiable {
+struct MovieSearchUIModel: Codable,Identifiable {
     let id: Int
     private let posterPath: String?
     private let releaseDate: String?
@@ -32,8 +32,5 @@ struct MovieSearchUIModel: Codable,MockableModel,Identifiable {
             return MovieSearchUIModel(id:model.id, posterPath: model.posterPath, releaseDate: model.releaseDate, title: model.title)
         }
     }
-    
-    static var mock: Self {
-        return MovieSearchUIModel(id: 3124, posterPath: "/qDRGPAcQoW8Wuig9bvoLpHwf1gU.jpg", releaseDate: "30-03-2022", title: "Mock Movie")
-    }
+
 }

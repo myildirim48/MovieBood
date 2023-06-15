@@ -14,7 +14,7 @@ extension PersonDetailView {
         @Injected private var repository: MovieDetailRepositoryProtocol
         
         @Published public var person: PersonUIModel?
-        @Published public var credits: PersonMovieCreditsUIModel = .mock
+        @Published public var credits: PersonMovieCreditsUIModel?
         //        @Published var showError = false
         //        @Published var errorMessage: String?
         

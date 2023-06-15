@@ -10,7 +10,7 @@ import Resolver
 
 extension DependencyRegistrationService {
     func registerService() {
-        Resolver.register { URLSession(configuration: .default) as NetworkLoader}
+        Resolver.register { URLSession(configuration: .default) as NetworkLoader }
         Resolver.register { NetworkService() as BaseServiceProtocol}
         Resolver.register {
             let decoder = JSONDecoder()
