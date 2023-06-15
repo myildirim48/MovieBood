@@ -36,7 +36,7 @@ struct ImageSlider: View {
 
 struct ImageSlider_Previews: PreviewProvider {
     static var previews: some View {
-        ImageSlider(popularMovies: MoviesUIModel.mocModelArr)
+        ImageSlider(popularMovies: MoviesUIModel.convert(from: [MoviesModel.mock], dataType: .nowPlaying))
     }
 }
 

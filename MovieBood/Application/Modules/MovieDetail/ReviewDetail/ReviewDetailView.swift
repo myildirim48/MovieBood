@@ -35,6 +35,6 @@ struct ReviewDetailView: View {
 
 struct ReviewDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewDetailView(review: MovieReviewsUIModel.mock)
+        ReviewDetailView(review: MovieReviewsUIModel.convert(from: [MovieReviewsModel.mock]).first!)
     }
 }

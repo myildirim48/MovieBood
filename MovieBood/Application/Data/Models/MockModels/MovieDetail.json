@@ -1,0 +1,219 @@
+{
+    "backdrop_path": "/4XM8DUTQb3lhLemJC51Jx4a2EuA.jpg",
+    "genres": [
+        {
+            "id": 28,
+            "name": "Action"
+        },
+        {
+            "id": 80,
+            "name": "Crime"
+        },
+        {
+            "id": 53,
+            "name": "Thriller"
+        }
+    ],
+    "id": 385687,
+    "original_language": "en",
+    "overview": "Over many missions and against impossible odds, Dom Toretto and his family have outsmarted, out-nerved and outdriven every foe in their path. Now, they confront the most lethal opponent they've ever faced: A terrifying threat emerging from the shadows of the past who's fueled by blood revenge, and who is determined to shatter this family and destroy everything—and everyone—that Dom loves, forever.",
+    "poster_path": "/fiVW06jE7z9YnO4trhaMEdclSiC.jpg",
+    "release_date": "2023-05-17",
+    "runtime": 142,
+    "tagline": "The end of the road begins.",
+    "title": "Fast X",
+    "vote_average": 7.367,
+    "vote_count": 1421,
+    "videos": {
+        "results": [
+            {
+                "iso_639_1": "en",
+                "iso_3166_1": "US",
+                "name": "The Scene that Started the Road to Revenge",
+                "key": "zOnaAGElQg8",
+                "site": "YouTube",
+                "size": 1080,
+                "type": "Clip",
+                "official": true,
+                "published_at": "2023-06-09T16:00:48.000Z",
+                "id": "648358cdbf31f25055a03305"
+            },
+            {
+                "iso_639_1": "en",
+                "iso_3166_1": "US",
+                "name": "Time Moves Fast",
+                "key": "A3GBDEE3zxY",
+                "site": "YouTube",
+                "size": 1080,
+                "type": "Teaser",
+                "official": true,
+                "published_at": "2023-05-26T22:50:56.000Z",
+                "id": "647c3c25174973013501bf63"
+            },
+            {
+                "iso_639_1": "en",
+                "iso_3166_1": "US",
+                "name": "Nathalie Emmanuel",
+                "key": "qIeXWLwM4s0",
+                "site": "YouTube",
+                "size": 1080,
+                "type": "Behind the Scenes",
+                "official": true,
+                "published_at": "2023-05-26T03:33:44.000Z",
+                "id": "6472aaf4a199a600f9426240"
+            }
+        ]
+    },
+    "credits": {
+        "cast": [
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 12835,
+                "known_for_department": "Acting",
+                "name": "Vin Diesel",
+                "original_name": "Vin Diesel",
+                "popularity": 75.359,
+                "profile_path": "/7rwSXluNWZAluYMOEWBxkPmckES.jpg",
+                "cast_id": 0,
+                "character": "Dominic Toretto",
+                "credit_id": "56d8c1e0c3a3681e3601fdc6",
+                "order": 0
+            },
+            {
+                "adult": false,
+                "gender": 1,
+                "id": 17647,
+                "known_for_department": "Acting",
+                "name": "Michelle Rodriguez",
+                "original_name": "Michelle Rodriguez",
+                "popularity": 43.233,
+                "profile_path": "/qsXG5kqxB4XdjLACVY8GXNW6Jfg.jpg",
+                "cast_id": 33,
+                "character": "Letty",
+                "credit_id": "6107f6a1ee43e80027c7bea1",
+                "order": 1
+            },
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 61697,
+                "known_for_department": "Acting",
+                "name": "Sung Kang",
+                "original_name": "Sung Kang",
+                "popularity": 25.75,
+                "profile_path": "/jCrjAt7L1SO4TOC0O6Nr7ZZU8vS.jpg",
+                "cast_id": 38,
+                "character": "Han",
+                "credit_id": "6107f7267ad08c005e578d66",
+                "order": 7
+            }
+        ],
+        "crew": [
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 11874,
+                "known_for_department": "Production",
+                "name": "Neal H. Moritz",
+                "original_name": "Neal H. Moritz",
+                "popularity": 5.712,
+                "profile_path": "/pPvK5xZTp1PymWL5OGc7dtqvx9Q.jpg",
+                "credit_id": "60d4e2233c887d0076f14538",
+                "department": "Production",
+                "job": "Producer"
+            },
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 18865,
+                "known_for_department": "Directing",
+                "name": "Louis Leterrier",
+                "original_name": "Louis Leterrier",
+                "popularity": 11.001,
+                "profile_path": "/guzsaiGBEy1qi3Ffh2uPcqaURYN.jpg",
+                "credit_id": "62700baac56d2d6f7690125e",
+                "department": "Directing",
+                "job": "Director"
+            },
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 29400,
+                "known_for_department": "Production",
+                "name": "Jeff Kirschenbaum",
+                "original_name": "Jeff Kirschenbaum",
+                "popularity": 5.244,
+                "profile_path": "/mt7lkSY2tvSpUQZoXa1ZW9UfvSc.jpg",
+                "credit_id": "62cb7b2746aed4087e8706dc",
+                "department": "Production",
+                "job": "Producer"
+            },
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 58189,
+                "known_for_department": "Directing",
+                "name": "Justin Lin",
+                "original_name": "Justin Lin",
+                "popularity": 12.644,
+                "profile_path": "/w0ryazdt8iS3GBrjXfv0FIwvUGY.jpg",
+                "credit_id": "646abd9333a376013b3ea59e",
+                "department": "Writing",
+                "job": "Story"
+            },
+            {
+                "adult": false,
+                "gender": 1,
+                "id": 90635,
+                "known_for_department": "Production",
+                "name": "Samantha Vincent",
+                "original_name": "Samantha Vincent",
+                "popularity": 10.944,
+                "profile_path": null,
+                "credit_id": "62cb7b39595a5612b8a43540",
+                "department": "Production",
+                "job": "Producer"
+            },
+            {
+                "adult": false,
+                "gender": 2,
+                "id": 937234,
+                "known_for_department": "Writing",
+                "name": "Dan Mazeau",
+                "original_name": "Dan Mazeau",
+                "popularity": 7.951,
+                "profile_path": null,
+                "credit_id": "646abd8c2bcf670172b1fe60",
+                "department": "Writing",
+                "job": "Story"
+            },
+            {
+                "adult": false,
+                "gender": 0,
+                "id": 1439735,
+                "known_for_department": "Visual Effects",
+                "name": "Corbin Mehl",
+                "original_name": "Corbin Mehl",
+                "popularity": 0.714,
+                "profile_path": null,
+                "credit_id": "648304fa99259c00e2f418d3",
+                "department": "Editing",
+                "job": "Editor"
+            },
+            {
+                "adult": false,
+                "gender": 0,
+                "id": 1439749,
+                "known_for_department": "Editing",
+                "name": "Laura Steiger",
+                "original_name": "Laura Steiger",
+                "popularity": 0.6,
+                "profile_path": null,
+                "credit_id": "6483051fbf31f25057057856",
+                "department": "Editing",
+                "job": "Editor"
+            }
+        ]
+    }
+}

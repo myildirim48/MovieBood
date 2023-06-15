@@ -20,9 +20,7 @@ extension MovieDetailView {
         @Published public var movie: MovieDetailUIModel = MovieDetailUIModel.mock
         @Published public var reviews: [MovieReviewsUIModel] = []
         @Published public var lastSeenReview: MovieReviewsUIModel?
-        
         @Published public var hasRealm: Bool = false
-
         
         private var pagesOfReviews: Int = 1
         private var canellabes = Set<AnyCancellable>()

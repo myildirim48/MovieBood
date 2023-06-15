@@ -44,7 +44,7 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7425F1A32A00D491002610FF"
+               BlueprintIdentifier = "749CFA4A2A39B10300380161"
                BuildableName = "MovieBoodTests.xctest"
                BlueprintName = "MovieBoodTests"
                ReferencedContainer = "container:MovieBood.xcodeproj">

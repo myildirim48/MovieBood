@@ -38,16 +38,14 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     var runtimeUI: String {
         let hour = String((runtime ?? 0) / 60)
         let mins = String((runtime ?? 0) % 60)
-        
         return"\(hour) hours \(mins) mins"
-        
     }
     
     var genresUI: String {
         return genres?.map({ $0.name }).joined(separator: ", ") ?? ""
     }
     
-    var voteAvarageUI: String{
+    var voteAvarageUI: String {
         return String(format: "%.1f", voteAverage ?? 0.0)
     }
     
@@ -111,14 +109,13 @@ struct MovieDetailUIModel:Equatable,MockableModel {
     
     //MARK: - Mockdata
     
-    
-    static var mock:Self {
+    static var mock: Self {
         return MovieDetailUIModel(id: 123, title: "titleMock", backdropPath: "", posterPath: "", overview: "overviewMock", voteAverage: 12.3, voteCount: 12, runtime: 120, releaseDate: "12-03-1962", tagline: "TaglineMock", originalLanguage: "en", genres: [.init(id: 1, name: "Dram")], credits: MovieCredit?.none, videos: MovieVideoResponse?.none)
     }
     
     static func convert(from response: MovieDetailModel) -> MovieDetailUIModel {
         
-        return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, tagline: response.tagline, originalLanguage: "en", genres: response.genres, credits: response.credits, videos: response.videos)
+        return MovieDetailUIModel(id: response.id, title: response.title, backdropPath: response.backdropPath, posterPath: response.posterPath, overview: response.overview, voteAverage: response.voteAverage, voteCount: response.voteCount, runtime: response.runtime, releaseDate: response.releaseDate, tagline: response.tagline, originalLanguage: response.originalLanguage, genres: response.genres, credits: response.credits, videos: response.videos)
         
     }
 }

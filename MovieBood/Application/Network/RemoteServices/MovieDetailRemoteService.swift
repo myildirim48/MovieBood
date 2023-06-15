@@ -25,6 +25,7 @@ final class MovieDetatilRemoteService: MovieDetailRemoteServiceProtocol, Request
     func getMovieDetail(movieID: String) async throws -> MovieDetailModel {
         
         var requestObject = TargetEndPoint.detail(id: movieID).commonRequestObject
+        
         requestObject.parameters["append_to_response"] = "videos,credits" //URL params
         let response: MovieDetailModel = try await request(with: requestObject)
         return response

@@ -59,7 +59,8 @@ struct HorizontalMovies: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 
                 LazyHStack(){
-                    ForEach((movies ?? MoviesUIModel.mocModelArr)) { movie in
+                    if let movies {
+                    ForEach((movies)) { movie in
                         NavigationLink(
                             destination: MovieDetailView(movieID: movie.movieID),
                             label: {
@@ -72,8 +73,9 @@ struct HorizontalMovies: View {
                         .onAppear{
                             lastSeenMovie = movie
                         }
+                    }                    .padding(.leading)
+
                     }
-                    .padding(.leading)
                 }
             }
             
