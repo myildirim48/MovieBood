@@ -14,7 +14,7 @@ final class MovieDetailUIModelConverterTests: XCTestCase {
     
     func testMovieDetailConvertToUIModelCorrectly() throws {
         //        Given
-        let movieDetail = MovieDetailModel.mock
+        let movieDetail = Bundle(for: MovieDetailUIModelConverterTests.self).decode(MovieDetailModel.self, from: "moviedetail")
         //        When
         let convertedUI = try XCTUnwrap(sut.convert(from:movieDetail))
         //        Then

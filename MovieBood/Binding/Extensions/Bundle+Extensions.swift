@@ -7,13 +7,12 @@
 
 import Foundation
 
-
 extension Bundle {
     public func decode<T: Decodable>(_ type: T.Type,
                                      from file: String,
                                      dateDecodingStategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                                      keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .convertFromSnakeCase) -> T {
-        guard let url = self.url(forResource: file, withExtension: nil) else {
+        guard let url = self.url(forResource: file, withExtension: "json") else {
             fatalError("Failed to locate \(file) in bundle.")
         }
         

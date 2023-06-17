@@ -25,8 +25,9 @@ class MovieListViewModelTests: XCTestCase {
     @MainActor
     func testResultsAreEmpty() async throws {
         //        Given
-        let givenResponse = MovieDetailModel.mock
-        Resolver.test.register { MockBaseService(model: givenResponse) as BaseServiceProtocol }
+        let mockResponse = Bundle(for: MovieListViewModelTests.self).decode(MovieDetailModel.self, from: "moviedetail")
+//        let givenResponse = MovieDetailModel.mock
+        Resolver.test.register { MockBaseService(model: mockResponse) as BaseServiceProtocol }
         Resolver.test.register { MoviesRemoteService() as MoviesRemoteServiceProtocol }
         Resolver.test.register { MoviesRepository() as MoviesRepositoryProtocol }
         
