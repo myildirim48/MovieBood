@@ -2,30 +2,27 @@
 //  MockBaseService.swift
 //  MovieBoodTests
 //
-//  Created by YILDIRIM on 2.05.2023.
+//  Created by YILDIRIM on 15.06.2023.
 //
 
-import XCTest
+import Foundation
 @testable import MovieBood
 
-final class MockBaseService: BaseServiceProtocol {
-
-    class MockBaseService: BaseServiceProtocol {
-        var model: Decodable?
-        var requestObject: RequestObject!
+class MockBaseService: BaseServiceProtocol {
+    var model: Decodable?
+    var requestObject: RequestObject!
+    
+    init(model: Decodable?) {
+        self.model = model
+    }
+    
+    func request<T>(with requestObject: RequestObject, decoder: JSONDecoder) async throws -> T where T : Decodable {
+        self.requestObject = requestObject
         
-        init(model: Decodable?) {
-            self.model = model
-        }
-        
-        func request<T>(with requestObject: RequestObject, decoder: JSONDecoder, handler: @escaping (Result<T, Error>) -> Void) where T : Decodable {
-            if let model = model as? T {
-                handler(.success(model))
-
-            }else {
-                handler(.failure(AppError.badResponse))
-            }
+        if let model = model as? T {
+            return model
+        } else {
+            throw AppError.badResponse
         }
     }
-
 }

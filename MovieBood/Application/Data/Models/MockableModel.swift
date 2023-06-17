@@ -9,3 +9,4 @@ import Foundation
 protocol MockableModel {
     static var mock: Self { get }
 }
+

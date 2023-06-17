@@ -18,7 +18,7 @@ extension DependencyRegistrationService {
             return decoder
         }
         Resolver.register {
-            let encoder = JSONEncoder()
+           let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             return encoder
         }

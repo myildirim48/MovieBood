@@ -8,6 +8,6 @@
 import Foundation
 extension MovieDetailModel {
     static var mock: MovieDetailModel {
-        Bundle.main.decode(MovieDetailModel.self, from: "MovieDetail.json")
+        Bundle.main.decode(MovieDetailModel.self, from: "moviedetail.json")
     }
 }

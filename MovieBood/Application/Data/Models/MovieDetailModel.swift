@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieDetailModel: Codable, Equatable {
+struct MovieDetailModel: Decodable, Equatable {
 
     let id: Int
     let title: String?
